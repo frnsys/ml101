@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>nomadic</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/override.css">
+
+</head>
+
+<body>
+    
+
+    <style>
+        html, body {
+            padding: 0 1em;
+            font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+            font-size: 1.5em;
+        }
+        img {
+            max-width: 100%;
+            margin: 0 auto;
+            display: block;
+        }
+        a, a:visited {
+            color: #8765FB;
+        }
+        .slide {
+            border-bottom: 1px solid #eee;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .slide:last-child {
+            border-bottom: none;
+        }
+
+        /* Vertically center */
+        .slide-inner {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        blockquote {
+            margin: 0;
+            padding: 0 2em;
+            border-left: 6px solid #8765FB;
+            color: #5D5D5D;
+        }
+        mark {
+            background: #95FF8E;
+        }
+        pre {
+            color: #8765FB;
+            padding: 2em;
+            font-size: 1.2em;
+            background: #F5F5F5;
+        }
+    </style>
+
+    <main role="main">
+        <div class="note" id="note">
+            <h1>ML101</h1>
+<p>Francis Tseng (@frnsys)</p>
+<hr />
+<h2>What is "Machine Learning"?</h2>
+<p>An amalgamation of techniques &amp; concepts from many different fields.</p>
+<hr />
+<h2>What is "Machine Learning"?</h2>
+<p>"machine learning is about using algorithms to infer things from data"</p>
+<p><code>data -&gt; algorithm -&gt; answers (hopefully)</code></p>
+<p>...but vague...</p>
+<hr />
+<h2>Motivation</h2>
+<p>What can you <em>do</em> with ML?</p>
+<ul>
+<li>Predict things</li>
+<li>Automate things/make decisions</li>
+<li>Gain insight into a system</li>
+<li>Emulate a system</li>
+</ul>
+<hr />
+<p>Getting more specific...</p>
+<hr />
+<h2>Supervised Learning</h2>
+<ul>
+<li>Provide the algorithm with input data and known answers (output) for each input</li>
+<li>The algorithm learns the relationship between the input and the output</li>
+<li>Returns a function which describes this relationship</li>
+</ul>
+<hr />
+<h2>Describing the world in functions</h2>
+<p>Phenomena can be described mathematically, i.e. by some function.</p>
+<p>For example, there is some relationship:</p>
+<ul>
+<li>between a house's size and its sale price<ul>
+<li>e.g. $\text{sales price} = 200 \times \text{square footage}$</li>
+</ul>
+</li>
+<li>runner's speed and their finishing time, e.g.<ul>
+<li>e.g. $t = \frac{d}{s}$</li>
+</ul>
+</li>
+<li>between a deer's weight and its height</li>
+</ul>
+<hr />
+<p>Supervised machine learning algorithms try to uncover this function.</p>
+<hr />
+<h2>Deer weight &amp; height</h2>
+<p>Let's say we have the following data about deer heights and weights.</p>
+<p><img alt="Fake deer data" src="assets/ml101/deerdata.png" /></p>
+<hr />
+<p>We also have the weights of some other deer but forgot to measure their height.</p>
+<p>If we can uncover a relationship between deer weight and height, we could estimate the heights of the deer we forgot to measure.</p>
+<hr />
+<p>This is a perfect opportunity for machine learning!</p>
+<p>We can use <em>linear regression</em>, in which we just try to fit a line to the data we have.</p>
+<p>(Remember that a line is just a representation of a function)</p>
+<hr />
+<p>A line's function:</p>
+<p>$$
+y = mx+b
+$$</p>
+<ul>
+<li>$m$ is the "slope"</li>
+<li>$b$ is the "intercept"</li>
+<li>$y$ is the "output" (what we want to predict)</li>
+<li>$x$ is the "input" (the data we want to predict from)</li>
+</ul>
+<hr />
+<p>Together, $m$ and $b$ define how the line looks:</p>
+<p><img alt="Lines" src="assets/ml101/lines.gif" /></p>
+<p>We say that $m$ and $b$ <em>parameterize</em> the function ($m$ and $b$ are called "parameters").</p>
+<hr />
+<p>Here:</p>
+<ul>
+<li>$y$ = deer height</li>
+<li>$x$ = deer weight</li>
+<li>$m$ = ???</li>
+<li>$b$ = ???</li>
+</ul>
+<hr />
+<p>Using known deer weights and heights (called <em>training data</em>),<br />
+linear regression will learn $m$ and $b$ for us.</p>
+<hr />
+<p>Some guesses at the best fit line:</p>
+<p><img alt="Deer lines" src="assets/ml101/deerfunc.png" /></p>
+<p>It looks like $m=1.8, b=50$ fits best.</p>
+<hr />
+<p>So our algorithm would give us $m=1.8, b=50$ back and thus we have learned the function:</p>
+<p>$$
+y = 1.8x + 50
+$$</p>
+<p>For relating a deer's weight to a deer's height.</p>
+<p>This function is called the <em>hypothesis</em>, and we can now use it to estimate deer heights given deer weights.</p>
+<hr />
+<p>Say we had a deer that weighed 70kg but wanted to know it's height. We just do:</p>
+<p>$$
+1.8(70) + 50 = 176\text{cm}
+$$</p>
+<p><img alt="Deer guesses" src="assets/ml101/deerguess.png" /></p>
+<hr />
+<h2>How does learning happen?</h2>
+<p>How does the algorithm come up with good values of $m$ and $b$?</p>
+<hr />
+<p>It varies, but usually via a <em>cost</em> or <em>objective</em> function.</p>
+<p>This tells the algorithm how "wrong" it is with its current guesses for $m$ and $b$ on the training data.</p>
+<p><img alt="Gradient Descent" src="assets/ml101/gradientdescent.png" /></p>
+<p>The algorithm iteratively tries different parameters (i.e. different guesses at the underlying function) until it can (approximately) minimize this error.</p>
+<hr />
+<h2>Computing Crime Coefficients</h2>
+<p>The following example is based off of the show <a href="https://en.wikipedia.org/wiki/Psycho-Pass"><em>Psycho-Pass</em></a>.</p>
+<p><img alt="Psycho-Pass" src="assets/ml101/psychopass.png" /></p>
+<hr />
+<p>Say we live in a world where the government uses some equation to calculate a <em>crime coefficient</em> for each individual (which measures how threatening someone is to society).</p>
+<p>We want to reverse engineer this equation and learn how these crime coefficients are computed.</p>
+<p>A friendly whistleblower has leaked us a dataset of crime coefficients, along with other values (features) we suspect are used to compute it:</p>
+<p><a href="http://bit.ly/1euritd"><a href="http://bit.ly/1euritd">http://bit.ly/1euritd</a></a></p>
+<hr />
+<p>This data set includes, among other things, the following:</p>
+<ul>
+<li>their latest <strong>heart rate</strong> (people who are about to commit a crime are probably very excited/anxious)</li>
+<li>their <strong>number of Facebook friends</strong> (people who have little connection to society have little interest in preserving it)</li>
+<li>whether or not they are <strong>related to a criminal</strong> (because crime is genetic, amirite?)</li>
+<li>their known crime coefficient</li>
+</ul>
+<p>With this data and the known crime coefficients (our training data), we can use a machine learning algorithm to learn the relationship between the features (heart rate, number of Facebook friends, and criminal relation) and the crime coefficients.</p>
+<hr />
+<h2><a href="http://nbviewer.ipython.org/github/ftzeng/ml101/blob/master/ml101.ipynb">~ notebook time ~</a></h2>
+<hr />
+<h2>The most important part of machine learning</h2>
+<p>The most critical part of all forms of machine learning is <em>representation</em>.</p>
+<p>How do you take your phenomena or data and translate into a form which the computer can process? What are the important signals (features) that represent what we want to predict?</p>
+<hr />
+<p>The process of coming up with a good representation for your problem is called <em>feature selection</em> or <em>feature engineering</em> (more art than science).</p>
+<p>In our case, we used heart rate, criminal relation, and number of Facebook friends. But we could have used anything we had data for.</p>
+<hr />
+<p>In a <a href="https://www.kaggle.com/c/whale-detection-challenge">machine learning competition for identifying whales by their sound</a>, Daniel Nouri framed the problem as one of image recognition.</p>
+<p><img alt="Whale sounds as spectrograms, from Daniel Nouri" src="assets/ml101/deep-learning-whales-spectrogram.jpg" /></p>
+<p>He represented the audio as images (spectrograms) and performed extremely well on the challenge. (h/t Johann Diedrick)</p>
+<hr />
+<h2>The other most important part of machine learning</h2>
+<ul>
+<li>Data is a crude approximation</li>
+<li>A lot of human subjectivity is involved<ul>
+<li>We relied on a lot of stereotypes and conjecture for our crime coefficients</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p>thanks</p>
+<p>~ @frnsys</p>
+        </div>
+        <div id="presentation">
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        var nodes = document.getElementById('note').childNodes,
+            out = document.getElementById('presentation'),
+            els = [[]];
+
+        function build_slide(elms) {
+            var slide = document.createElement('div'),
+                inner = document.createElement('div');
+
+            slide.className = 'slide';
+            inner.className = 'slide-inner';
+
+            for(var j=0; j<elms.length; j++) {
+                inner.appendChild(elms[j]);
+            }
+            slide.appendChild(inner);
+            out.appendChild(slide);
+        }
+
+        function resize_slides() {
+            var slides = document.getElementsByClassName('slide'),
+                win_height = window.innerHeight;
+            for (var i=0; i<slides.length; i++) {
+                var slide_height = slides[i].clientHeight;
+                if (slide_height > win_height) {
+                    var scale = win_height/slide_height,
+                        transform = 'scale(' + scale + ')';
+                    slides[i].style.webkitTransform = transform;
+                    slides[i].style.mozTransform    = transform;
+                    slides[i].style.transform       = transform;
+                }
+                slides[i].style.height = win_height + "px";
+            }
+        }
+        window.onresize = resize_slides();
+
+        // Build slides out of the note html, interpreting `hr` as a slide break.
+        for (var i=0; i<nodes.length; i++) {
+            if (nodes[i].nodeName.toLowerCase() == 'hr') {
+                els.push([]);
+            } else {
+                els[els.length - 1].push(nodes[i]);
+            }
+        }
+        for (var i=0; i<els.length; i++) {
+            build_slide(els[i]);
+        }
+        document.getElementById('note').style.display = 'none';
+        resize_slides();
+
+        // Key navigation.
+        document.onkeydown = function(e) {
+            var slides = document.getElementsByClassName('slide'),
+                curr_slide;
+            for (var i=0; i<slides.length; i++) {
+                var y   = window.pageYOffset,
+                    wh  = window.outerHeight,
+                    h   = slides[i].offsetHeight,
+                    top = slides[i].offsetTop;
+                if (top + h >= y + wh/2 && top + h <= y + wh ||
+                    top <= y + wh/2 && top > y) {
+                    curr_slide = i;
+                    break;
+                }
+            }
+
+            e = e || window.event;
+            switch(e.which || e.keyCode) {
+                case 40: // down
+                    if (i < slides.length - 1)
+                        window.scrollTo(0, slides[i+1].offsetTop);
+                    e.preventDefault();
+                    break;
+                case 38: // up
+                    if (i > 0)
+                        window.scrollTo(0, slides[i-1].offsetTop);
+                    e.preventDefault();
+                    break;
+            }
+        }
+    </script>
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script>
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [["$","$"]],
+                displayMath: [['$$','$$']],
+                processEscapes: true
+            }
+        });
+        MathJax.Hub.Startup.onload();
+    </script>
+
+
+
+</body>
+</html>
