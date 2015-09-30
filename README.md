@@ -2,7 +2,7 @@
 
 This is a series of iPython notebooks for "Machine Learning 101" workshops.
 
-Concepts are taught via two "stories":
+Concepts are taught via two "stories", one for natural phenomena and one for artificial phenomena:
 
 - a deer researcher
 - a journalist in a [Psycho-Pass](https://en.wikipedia.org/wiki/Psycho-Pass)-esque world
