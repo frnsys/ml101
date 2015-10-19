@@ -21,4 +21,8 @@ Then look in the `notebooks` folder.
 ---
 
 ![Office of Social Health](assets/social_health/logo.png)
-![Office of Social Health](assets/social_health/safety_in_numbers.sm.jpg)
+![Safety in numbers](assets/social_health/safety_in_numbers.sm.jpg)
+![What hue are you?](assets/social_health/what_hue_are_you.sm.jpg)
+![Be free](assets/social_health/be_free.sm.jpg)
+![Get clear](assets/social_health/get_clear.sm.jpg)
+![Mobile app](assets/social_health/mobile_app.sm.jpg)
