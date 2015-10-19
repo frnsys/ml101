@@ -5,7 +5,7 @@ This is a series of iPython notebooks for "Machine Learning 101" workshops.
 Concepts are taught via two "stories", one for natural phenomena and one for artificial phenomena:
 
 - a deer researcher
-- a journalist in a [Psycho-Pass](https://en.wikipedia.org/wiki/Psycho-Pass)-esque world (or the real world now, I guess, cf. [Sesame Credit](https://www.privateinternetaccess.com/blog/2015/10/in-china-your-credit-score-is-now-affected-by-your-political-opinions-and-your-friends-political-opinions/))
+- a journalist in a [Psycho-Pass](https://en.wikipedia.org/wiki/Psycho-Pass)-esque world (or the real world now, I guess, cf. [Sesame Credit](http://qz.com/519737/all-chinese-citizens-now-have-a-score-based-on-how-well-we-live-and-mine-sucks/))
 
 All data is generated via the `data/data_generation.ipynb` notebook to be tailored for the workshop.
 
@@ -16,7 +16,9 @@ All data is generated via the `data/data_generation.ipynb` notebook to be tailor
 
 Then look in the `notebooks` folder.
 
-
 ![Deer](assets/sawsbuck3.png)
 
-![Psycho-Pass](assets/psychopass.png)
+---
+
+![Office of Social Health](assets/social_health/logo.png)
+![Office of Social Health](assets/social_health/safety_in_numbers.sm.jpg)
