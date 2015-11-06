@@ -33,19 +33,34 @@
     <main role="main">
         <div>
             <div class="slide active" style="background-image:url('assets/social_health/logo.png')"></div>
-            <div class="slide" style="background-image:url('assets/social_health/mobile_app.sm.jpg')"></div>
             <div class="slide" style="background-image:url('assets/social_health/safety_in_numbers.sm.jpg')"></div>
             <div class="slide" style="background-image:url('assets/social_health/what_hue_are_you.sm.jpg')"></div>
             <div class="slide" style="background-image:url('assets/social_health/be_free.sm.jpg')"></div>
             <div class="slide" style="background-image:url('assets/social_health/get_clear.sm.jpg')"></div>
+            <div class="slide" style="background-image:url('assets/social_health/mobile_app.sm.jpg')"></div>
         </div>
     </main>
 
     <script type="text/javascript">
-        // Key navigation.
+        var curr_slide = 0,
+            slides = document.getElementsByClassName('slide');
+
+        function next_slide() {
+            if (curr_slide < slides.length - 1) {
+                slides[curr_slide].classList.remove('active');
+                slides[curr_slide+1].classList.add('active');
+            }
+        }
+
+        function prev_slide() {
+            if (curr_slide > 0) {
+                slides[curr_slide].classList.remove('active');
+                slides[curr_slide-1].classList.add('active');
+            }
+        }
+
+        // Key navigation
         document.onkeydown = function(e) {
-            var slides = document.getElementsByClassName('slide'),
-                curr_slide;
             for (var i=0; i<slides.length; i++) {
                 if (slides[i].classList.contains('active')) {
                     curr_slide = i;
@@ -54,22 +69,20 @@
 
             e = e || window.event;
             switch(e.which || e.keyCode) {
-                case 39: // right
-                    if (curr_slide < slides.length - 1) {
-                        slides[curr_slide].classList.remove('active');
-                        slides[curr_slide+1].classList.add('active');
-                    }
+                case 39: // right (forward)
+                    next_slide();
                     e.preventDefault();
                     break;
-                case 37: // left
-                    if (curr_slide > 0) {
-                        slides[curr_slide].classList.remove('active');
-                        slides[curr_slide-1].classList.add('active');
-                    }
+                case 37: // left (backwards)
+                    prev_slide();
                     e.preventDefault();
                     break;
             }
         }
+
+        setInterval(next_slide, 8000);
+
+        // Rolling slideshow
     </script>
 
 </body>
