@@ -18,7 +18,7 @@ from lib import Environment
 
 
 class QLearner():
-    def __init__(self, position, environment, rewards, discount=0.5, explore=0.5, learning_rate=0.5, decay=0.001):
+    def __init__(self, position, environment, rewards, discount=0.5, explore=1, learning_rate=0.5, decay=0.005):
         """
         - states_actions: a mapping of states to viable actions for that state
         - rewards: a reward function, taking a state as input, or a mapping of states to a reward value
@@ -94,9 +94,10 @@ class QLearner():
 
 if __name__ == '__main__':
     env = Environment([
-        [None, -10,0,0],
-        [10,0,10,100],
-        [10,0,0]
+        [None, -10,0,0,50],
+        [10,0,10,100, 0, -200, 20],
+        [10,0,0, None, 10, None, -10, None],
+        [-10,None,0, 5, 10, None, 1000, 0]
     ])
     pos = random.choice(env.positions)
 
@@ -107,9 +108,10 @@ if __name__ == '__main__':
         return env.value(state) + 1
 
     agent = QLearner(pos, env, reward)
-    for _ in range(100):
+    for i in range(100):
         agent.step()
         env.render(agent.state)
-        time.sleep(0.5)
-
-    print(agent.Q)
+        print('step: {}, explore: {}'.format(i, agent.explore))
+        for pos, vals in agent.Q.items():
+            print('{} -> {}'.format(pos, vals))
+        time.sleep(0.3)

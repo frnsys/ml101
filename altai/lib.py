@@ -11,7 +11,7 @@ class Renderer():
         self.term = Terminal()
         self.grid = grid
 
-    def _draw_cell(self, x, y, color, value):
+    def _draw_cell(self, x, y, color, value, pos):
         x_mid = math.floor(self.cell_width/2)
         y_mid = math.floor(self.cell_height/2)
 
@@ -30,9 +30,11 @@ class Renderer():
             highlight = 2
         else:
             highlight = 245
-        for i in range(len(v)):
+        for i, char in enumerate(v):
             x = cx - offset + i
-            print(self.term.move(cy, x) + self.term.on_color(color) + self.term.color(highlight) + v[i] + self.term.normal)
+            print(self.term.move(cy, x) + self.term.on_color(color) + self.term.color(highlight) + char + self.term.normal)
+
+        print(self.term.move(y, x) + self.term.on_color(color) + self.term.color(248) + '{},{}'.format(*pos) + self.term.normal)
 
     def render(self, pos=None):
         """renders the grid,
@@ -45,7 +47,7 @@ class Renderer():
                 color = 252 if (r + c) % 2 == 0 else 253
                 if pos is not None and pos == (r, c):
                     color = 4
-                self._draw_cell(c * self.cell_width, r * self.cell_height, color, val)
+                self._draw_cell(c * self.cell_width, r * self.cell_height, color, val, (r,c))
 
         # move cursor to end
         print(self.term.move(len(self.grid) * self.cell_height, 0))
