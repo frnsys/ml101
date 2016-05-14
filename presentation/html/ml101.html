@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-
     <title>nomadic</title>
-
     <link rel="stylesheet" type="text/css" href="/static/css/index.css">
     <link rel="stylesheet" type="text/css" href="/override.css">
 
@@ -14,7 +12,6 @@
 
 <body>
     
-
     <style>
         html, body {
             padding: 0 1em;
@@ -67,152 +64,172 @@
             <h1>ML101</h1>
 <p>Francis Tseng (@frnsys)</p>
 <hr />
-<h2>What is "Machine Learning"?</h2>
-<p>An amalgamation of techniques &amp; concepts from many different fields.</p>
+<h2>What do you know about machine learning? 💬</h2>
 <hr />
-<h2>What is "Machine Learning"?</h2>
-<p>"machine learning is about using algorithms to infer things from data"</p>
-<p><code>data -&gt; algorithm -&gt; answers (hopefully)</code></p>
-<p>...but vague...</p>
+<p>ok, so what the heck is machine learning doing? what is it even for?</p>
+<h2>💻🤔</h2>
 <hr />
-<h2>Motivation</h2>
-<p>What can you <em>do</em> with ML?</p>
+<h2>✨~modeling the world~✨</h2>
+<hr />
+<p>we can model phenomena, both natural and artificial, as mathematical functions</p>
+<h1>y ⟶ <mathjax>$f(x)$</mathjax></h1>
+<h1>💫 ⟶ <mathjax>$f(⚛)$</mathjax></h1>
+<h1>💹 ⟶ <mathjax>$f(📰)$</mathjax></h1>
+<h1>🎼 ⟶ <mathjax>$f(🎼)$</mathjax></h1>
+<h1>🎼 ⟶ <mathjax>$f(🎼,😶)$</mathjax></h1>
+<hr />
+<p>how could we come up with such a function? 🤔</p>
+<p>there are <em>infinitely</em> many of them</p>
+<hr />
+<p>we could go and observe a lot of things and then try to figure out some equation that matched what we observed.</p>
+<h1>🌎👀</h1>
+<hr />
+<p>but that is a tedious process...</p>
+<hr />
+<p>ok, let's have computers do it for us then</p>
+<h1>🤖</h1>
+<hr />
+<p>this is in essence what "machine learning" is:</p>
+<h3><em>using computers to learn functions from observations (data)</em></h3>
+<hr />
+<p>once you learn your mystery function, there's so much you can do with it:</p>
 <ul>
-<li>Predict things</li>
-<li>Automate things/make decisions</li>
-<li>Gain insight into a system</li>
-<li>Emulate a system</li>
+<li>predict things</li>
+<li>automate things/make decisions</li>
+<li>gain insight into a system</li>
+<li>emulate a system</li>
 </ul>
 <hr />
-<p>Getting more specific...</p>
+<p>let's get more concrete</p>
+<h1>🐄</h1>
 <hr />
-<h2>Supervised Learning</h2>
+<p>let's say you're a farmer. you have a herd of cows.</p>
+<p>🐄🐄🐄🐄</p>
+<p>you want to estimate how heavy a cow will grow to be given its birth weight.</p>
+<hr />
+<p>you collect some data which looks like this:</p>
+<p><img alt="" src="assets/ml101/deerdata.png" /></p>
+<h6>(ignore the labels, this is from something else :\)</h6>
+<hr />
+<p>we can try to learn a function that <em>fits</em> this data; i.e. that best describes (models) the relationship between the birth weight and mature weight.</p>
+<hr />
+<p>to better appreciate all the help computers give us, let's try this manually first.</p>
+<hr />
+<p><img alt="" src="assets/ml101/deerdata.png" /></p>
+<p>this data looks like a line doesn't it?</p>
+<hr />
+<p>remember that a line can be described in the general form of</p>
+<p><mathjax>$$
+y = mx + b
+$$</mathjax></p>
+<hr />
+<p>remember that lines vary depending on what the values of <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax> are:</p>
+<p><img alt="Lines" src="assets/ml101/lines.svg" /></p>
+<p>we say that <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax> <em>parameterize</em> the function (<mathjax>$m$</mathjax> and <mathjax>$b$</mathjax> are called "parameters").</p>
+<hr />
+<p>these parameters define a unique function, and thus when we "learn" a particular function, we are actually learning these parameters!</p>
+<hr />
+<p>if we wanted to learn these parameters manually, we could use the good old "guess-and-check" method:</p>
+<p><img alt="" src="assets/ml101/deerguess.png" /></p>
+<hr />
+<p>this was an easy dataset - real world data may be much more convoluted, not describable by a line, in many more dimensions, etc...manually figuring out the function gets kinda hard then.</p>
+<p><img alt="" src="assets/ml101/nonconvex.svg" /></p>
+<hr />
+<p>(example in notebook 🗒)</p>
+<hr />
+<p>essentially every machine learning technique learns what these parameters are, and one of what differentiates algorithms is the approach with which they do this learning.</p>
+<p>another main differentiator is what <em>kinds</em> of functions the algorithm can learn - some can only learn lines, while others can learn much fancier functions.</p>
+<hr />
+<h2>so how the heck does the algorithm learn the parameters?</h2>
+<h1>🤔</h1>
+<hr />
+<p>it varies, but usually via a <em>cost</em> or <em>objective</em> function (often notated <mathjax>$J$</mathjax>).</p>
+<p>this tells the algorithm how "wrong" it is with its current guesses for the parameters on the training data.</p>
+<hr />
+<p>the algorithm iteratively tries different parameters (i.e. different guesses at the underlying function) until it can minimize this error.</p>
+<p>that is, it tries to <em>optimize</em> the parameters for the cost function.</p>
+<hr />
+<p>different optimization algorithms have different ways of picking new guesses.</p>
+<p>the most popular one is <em>gradient descent</em>, which looks for the direction in which the error is decreasing, and then takes a step in that direction.</p>
+<h1>🗻</h1>
+<hr />
+<p>if we were just finding <mathjax>$m$</mathjax>, this might look like:</p>
+<p><img alt="" src="assets/ml101/gradient_descent.svg" /></p>
+<hr />
+<p>if we're finding both <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax>, this might look like:</p>
+<p><img alt="" src="assets/ml101/gradient_descent_3d.svg" /></p>
+<hr />
+<p>there are other optimization methods such as genetic algorithms, particle swarm optimization, etc...</p>
+<p>but gradient descent is by far the most common.</p>
+<hr />
+<p>another example:</p>
+<h1>the office of social health</h1>
+<p><img alt="" src="assets/ml101/safety_in_numbers.sm.jpg" /></p>
+<p>(based on the psycho-pass series)</p>
+<hr />
+<h2>ok, let's switch gears and talk about 🎉~neural networks~🎉</h2>
+<p>they have many, many fun and interesting applications</p>
+<hr />
+<p>a neural network does essentially what we were doing before, but it can learn more sophisticated functions 💪🏽</p>
+<hr />
+<p><img alt="" src="assets/ml101/nn.png" /></p>
+<h6>(from <a href="http://neuralnetworksanddeeplearning.com/">neuralnetworksanddeeplearning.com</a>)</h6>
+<hr />
+<p>one particularly fun kind of neural network is a <em>recurrent neural network</em></p>
+<p><img alt="" src="assets/ml101/rnn.png" /></p>
+<h6>(from <a href="http://www.hexahedria.com/2015/08/03/composing-music-with-recurrent-neural-networks/">hexahedria</a>)</h6>
+<p>these are great for modeling <em>sequences</em>, e.g. text📝, music🎶, time series🕐, and so on</p>
+<hr />
+<p>there are examples abound here, such as generated texts in the style of <a href="https://www.countbayesie.com/blog/2015/5/24/writing-finnegans-wake-with-a-recurrent-neural-net">Finnegan's Wake</a>, endless new episode scripts for <a href="http://fullest.house/">Full House</a>, and algorithimically-composed <a href="https://medium.com/dbrs-innovation-labs/in-his-novel-galatea-2-2-e9d11c9b7c2a#.xd00cremz">sheet music</a>.</p>
+<hr />
+<p>sounds like a lot of fun, but there's one hangup...</p>
+<h1>🙁</h1>
+<hr />
+<h2>what if the inputs we want to use aren't numbers? 🤔</h2>
+<p>for example, how do you put a piece of text into a function?</p>
+<h1>📖 ⟶ 🔢</h1>
+<p>how do you <em>represent</em> it as a number?</p>
+<hr />
+<p>this is the problem of <em>representation</em>, and it is key to machine learning.</p>
+<p>coming up with good representations is called <em>feature engineering</em> and it can be more of an art than a skill.</p>
+<h1>🛠 + 🎨</h1>
+<hr />
+<p>for text, one option is to map each word to a unique number.</p>
+<h1>🙃</h1>
+<hr />
+<p>(example in notebook 🗒)</p>
+<hr />
+<p>one last kind of machine learning that I really enjoy:</p>
+<h2>reinforcement learning</h2>
+<h1>🐶</h1>
+<hr />
+<p>what we've seen so far is pretty cool, but things <em>really</em> get fun when we start designing agents that can act independently;</p>
+<p>where they can interact with an environment on their own, learn from it, and develop new behaviors 🤖</p>
+<hr />
+<p>reinforcement learning is behind neat stuff like Google DeepMind's <em>AlphaGo</em> 🏆 and their <a href="https://www.youtube.com/watch?v=Vr5MR5lKOc8">Atari-playing AIs</a> 🕹</p>
+<hr />
+<p>the behavior of the agent can be described by (you guessed it) a function, and of course we want to learn it 🎓</p>
+<hr />
+<p>the basic idea:</p>
 <ul>
-<li>Provide the algorithm with input data and known answers (output) for each input</li>
-<li>The algorithm learns the relationship between the input and the output</li>
-<li>Returns a function which describes this relationship</li>
+<li>we model the world as various <em>states</em> 🙍🏽 the agent can be in.</li>
+<li>the agent can take <em>actions</em> 🏧 that move between these states.</li>
+<li>each state has an associated <em>reward</em> 💰 (or punishment 🗡).</li>
+<li>the agent <em>explores</em> 🗺 these states and learns which sequence of actions tend to lead to more rewards.</li>
 </ul>
+<p>this is given to us by a function, usually called <mathjax>$q$</mathjax>, which, given a state, maps actions to values - so this is the function we want to learn.</p>
 <hr />
-<h2>Describing the world in functions</h2>
-<p>Phenomena can be described mathematically, i.e. by some function.</p>
-<p>For example, there is some relationship:</p>
-<ul>
-<li>between a house's size and its sale price<ul>
-<li>e.g. $\text{sales price} = 200 \times \text{square footage}$</li>
-</ul>
-</li>
-<li>between a runner's speed and their finishing time<ul>
-<li>e.g. $t = \frac{d}{s}$</li>
-</ul>
-</li>
-<li>between a deer's weight and its height</li>
-</ul>
+<p><img alt="" src="assets/ml101/mdp.png" /></p>
+<p>a very simple set of agent states and actions. this agent will eventually spend all of its time sleeping 💤.</p>
 <hr />
-<p>Supervised machine learning algorithms try to uncover this function.</p>
+<p>a very simple environment for a RL agent is a "grid world"</p>
+<p><img alt="" src="assets/ml101/mdp_grid.png" /></p>
 <hr />
-<h2>Deer weight &amp; height</h2>
-<p>Let's say we have the following data about deer heights and weights.</p>
-<p><img alt="Fake deer data" src="assets/ml101/deerdata.png" /></p>
+<p><img alt="" src="assets/ml101/workshop_rl.gif" /></p>
+<p>(example in notebook 🗒)</p>
 <hr />
-<p>We also have the weights of some other deer but forgot to measure their height.</p>
-<p>If we can uncover a relationship between deer weight and height, we could estimate the heights of the deer we forgot to measure.</p>
-<hr />
-<p>This is a perfect opportunity for machine learning!</p>
-<p>We can use <em>linear regression</em>, in which we just try to fit a line to the data we have.</p>
-<p>(Remember that a line is just a representation of a function)</p>
-<hr />
-<p>A line's function:</p>
-<p>$$
-y = mx+b
-$$</p>
-<ul>
-<li>$m$ is the "slope"</li>
-<li>$b$ is the "intercept"</li>
-<li>$y$ is the "output" (what we want to predict)</li>
-<li>$x$ is the "input" (the data we want to predict from)</li>
-</ul>
-<hr />
-<p>Together, $m$ and $b$ define how the line looks:</p>
-<p><img alt="Lines" src="assets/ml101/lines.gif" /></p>
-<p>We say that $m$ and $b$ <em>parameterize</em> the function ($m$ and $b$ are called "parameters").</p>
-<hr />
-<p>Here:</p>
-<ul>
-<li>$y$ = deer height</li>
-<li>$x$ = deer weight</li>
-<li>$m$ = ???</li>
-<li>$b$ = ???</li>
-</ul>
-<hr />
-<p>Using known deer weights and heights (called <em>training data</em>),<br />
-linear regression will learn $m$ and $b$ for us.</p>
-<hr />
-<p>Some guesses at the best fit line:</p>
-<p><img alt="Deer lines" src="assets/ml101/deerfunc.png" /></p>
-<p>It looks like $m=1.8, b=50$ fits best.</p>
-<hr />
-<p>So our algorithm would give us $m=1.8, b=50$ back and thus we have learned the function:</p>
-<p>$$
-y = 1.8x + 50
-$$</p>
-<p>For relating a deer's weight to a deer's height.</p>
-<p>This function is called the <em>hypothesis</em>, and we can now use it to estimate deer heights given deer weights.</p>
-<hr />
-<p>Say we had a deer that weighed 70kg but wanted to know it's height. We just do:</p>
-<p>$$
-1.8(70) + 50 = 176\text{cm}
-$$</p>
-<p><img alt="Deer guesses" src="assets/ml101/deerguess.png" /></p>
-<hr />
-<h2>How does learning happen?</h2>
-<p>How does the algorithm come up with good values of $m$ and $b$?</p>
-<hr />
-<p>It varies, but usually via a <em>cost</em> or <em>objective</em> function.</p>
-<p>This tells the algorithm how "wrong" it is with its current guesses for $m$ and $b$ on the training data.</p>
-<p><img alt="Gradient Descent" src="assets/ml101/gradientdescent.png" /></p>
-<p>The algorithm iteratively tries different parameters (i.e. different guesses at the underlying function) until it can (approximately) minimize this error.</p>
-<hr />
-<h2>Computing Crime Coefficients</h2>
-<p>The following example is based off of the show <a href="https://en.wikipedia.org/wiki/Psycho-Pass"><em>Psycho-Pass</em></a>.</p>
-<p><img alt="Psycho-Pass" src="assets/ml101/psychopass.png" /></p>
-<hr />
-<p>Say we live in a world where the government uses some equation to calculate a <em>crime coefficient</em> for each individual (which measures how threatening someone is to society).</p>
-<p>We want to reverse engineer this equation and learn how these crime coefficients are computed.</p>
-<p>A friendly whistleblower has leaked us a dataset of crime coefficients, along with other values (features) we suspect are used to compute it:</p>
-<p><a href="http://bit.ly/1euritd"><a href="http://bit.ly/1euritd">http://bit.ly/1euritd</a></a></p>
-<hr />
-<p>This data set includes, among other things, the following:</p>
-<ul>
-<li>their latest <strong>heart rate</strong> (people who are about to commit a crime are probably very excited/anxious)</li>
-<li>their <strong>number of Facebook friends</strong> (people who have little connection to society have little interest in preserving it)</li>
-<li>whether or not they are <strong>related to a criminal</strong> (because crime is genetic, amirite?)</li>
-<li>their known crime coefficient</li>
-</ul>
-<p>With this data and the known crime coefficients (our training data), we can use a machine learning algorithm to learn the relationship between the features (heart rate, number of Facebook friends, and criminal relation) and the crime coefficients.</p>
-<hr />
-<h2><a href="http://nbviewer.ipython.org/github/ftzeng/ml101/blob/master/ml101.ipynb">~ notebook time ~</a></h2>
-<hr />
-<h2>The most important part of machine learning</h2>
-<p>The most critical part of all forms of machine learning is <em>representation</em>.</p>
-<p>How do you take your phenomena or data and translate into a form which the computer can process? What are the important signals (features) that represent what we want to predict?</p>
-<hr />
-<p>The process of coming up with a good representation for your problem is called <em>feature selection</em> or <em>feature engineering</em> (more art than science).</p>
-<p>In our case, we used heart rate, criminal relation, and number of Facebook friends. But we could have used anything we had data for.</p>
-<hr />
-<p>In a <a href="https://www.kaggle.com/c/whale-detection-challenge">machine learning competition for identifying whales by their sound</a>, Daniel Nouri framed the problem as one of image recognition.</p>
-<p><img alt="Whale sounds as spectrograms, from Daniel Nouri" src="assets/ml101/deep-learning-whales-spectrogram.jpg" /></p>
-<p>He represented the audio as images (spectrograms) and performed extremely well on the challenge. (h/t Johann Diedrick)</p>
-<hr />
-<h2>The other most important part of machine learning</h2>
-<ul>
-<li>Data is a crude approximation</li>
-<li>A lot of human subjectivity is involved<ul>
-<li>We relied on a lot of stereotypes and conjecture for our crime coefficients</li>
-</ul>
-</li>
-</ul>
-<hr />
-<p>thanks</p>
+<p>thanks!</p>
+<p>if you want to go deeper: <a href="http://frnsys.com/ai_notes/">frnsys.com/ai_notes/</a></p>
 <p>~ @frnsys</p>
         </div>
         <div id="presentation">
@@ -312,8 +329,6 @@ $$</p>
         });
         MathJax.Hub.Startup.onload();
     </script>
-
-
 
 </body>
 </html>
