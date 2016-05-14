@@ -18,7 +18,7 @@ from lib import Environment
 
 
 class QLearner():
-    def __init__(self, position, environment, rewards, discount=0.5, explore=1, learning_rate=0.5, decay=0.005):
+    def __init__(self, state, environment, rewards, discount=0.5, explore=1, learning_rate=0.5, decay=0.005):
         """
         - states_actions: a mapping of states to viable actions for that state
         - rewards: a reward function, taking a state as input, or a mapping of states to a reward value
@@ -37,16 +37,31 @@ class QLearner():
         self.prev = (None, None)
 
         # our state is just our position
-        self.state = position
+        self.state = state
         self.env = environment
 
         # initialize Q
         self.Q = {}
 
+    def actions(self, state):
+        return self.env.actions(state)
+
+    def take_action(self, action):
+        r, c = self.state
+        if action == 'up':
+            r -= 1
+        elif action == 'down':
+            r += 1
+        elif action == 'right':
+            c += 1
+        elif action == 'left':
+            c -= 1
+        self.state = (r,c)
+
     def step(self):
         """take an action"""
         # check possible actions given state
-        actions = self.env.actions(self.state)
+        actions = self.actions(self.state)
 
         # if this is the first time in this state,
         # initialize possible actions
@@ -67,16 +82,7 @@ class QLearner():
         # decay explore
         self.explore = max(0, self.explore - self.decay)
 
-        r, c = self.state
-        if action == 'up':
-            r -= 1
-        elif action == 'down':
-            r += 1
-        elif action == 'right':
-            c += 1
-        elif action == 'left':
-            c -= 1
-        self.state = (r,c)
+        self.take_action(action)
         return action
 
     def _best_action(self, state):

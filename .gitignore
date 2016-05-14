@@ -4,3 +4,4 @@
 *.swp
 dist/
 .ipynb_checkpoints/
+scratch

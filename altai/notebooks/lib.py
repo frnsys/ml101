@@ -1,4 +1,5 @@
 import math
+import random
 from blessings import Terminal
 
 
@@ -94,3 +95,17 @@ class Environment():
                 if self.grid[r][c] is not None:
                     positions.append((r,c))
         return positions
+
+
+def random_choice(choices):
+    """returns a random choice
+    from a list of (choice, probability)"""
+    # sort by probability
+    choices = sorted(choices, key=lambda x:x[1])
+    roll = random.random()
+
+    acc_prob = 0
+    for choice, prob in choices:
+        acc_prob += prob
+        if roll <= acc_prob:
+            return choice
