@@ -64,6 +64,28 @@
             <h1>ML101</h1>
 <p>Francis Tseng (@frnsys)</p>
 <hr />
+<p>let's start setting up b/c it will probably take awhile ⏳</p>
+<pre><code>git clone https://github.com/frnsys/ml101
+cd ml101
+pip install -r requirements.txt
+jupyter notebook
+</code></pre>
+<hr />
+<h2>what we'll cover today</h2>
+<p>how to use:</p>
+<ol>
+<li><a href="http://scikit-learn.org/stable/"><code>scikit-learn</code></a> for supervised linear learning</li>
+<li><a href="http://keras.io/"><code>keras</code></a> for neural networks</li>
+<li><a href="http://pandas.pydata.org/"><code>pandas</code></a> for handling data</li>
+<li><a href="http://matplotlib.org/"><code>matplotlib</code></a> and <a href="https://web.stanford.edu/~mwaskom/software/seaborn/"><code>seaborn</code></a> for visualizing data</li>
+</ol>
+<hr />
+<h2>assumptions</h2>
+<ul>
+<li>you have some python 🐍 experience</li>
+<li>you know a bit of high school 🏫 math</li>
+</ul>
+<hr />
 <h2>What do you know about machine learning? 💬</h2>
 <hr />
 <p>ok, so what the heck is machine learning doing? what is it even for?</p>
@@ -108,14 +130,13 @@
 <p>you want to estimate how heavy a cow will grow to be given its birth weight.</p>
 <hr />
 <p>you collect some data which looks like this:</p>
-<p><img alt="" src="assets/ml101/deerdata.png" /></p>
-<h6>(ignore the labels, this is from something else :\)</h6>
+<p><img alt="" src="assets/ml101/cow_data.png" /></p>
 <hr />
 <p>we can try to learn a function that <em>fits</em> this data; i.e. that best describes (models) the relationship between the birth weight and mature weight.</p>
 <hr />
 <p>to better appreciate all the help computers give us, let's try this manually first.</p>
 <hr />
-<p><img alt="" src="assets/ml101/deerdata.png" /></p>
+<p><img alt="" src="assets/ml101/cow_data.png" /></p>
 <p>this data looks like a line doesn't it?</p>
 <hr />
 <p>remember that a line can be described in the general form of</p>
@@ -130,7 +151,7 @@ $$</mathjax></p>
 <p>these parameters define a unique function, and thus when we "learn" a particular function, we are actually learning these parameters!</p>
 <hr />
 <p>if we wanted to learn these parameters manually, we could use the good old "guess-and-check" method:</p>
-<p><img alt="" src="assets/ml101/deerguess.png" /></p>
+<p><img alt="" src="assets/ml101/cow_guess.png" /></p>
 <hr />
 <p>this was an easy dataset - real world data may be much more convoluted, not describable by a line, in many more dimensions, etc...manually figuring out the function gets kinda hard then.</p>
 <p><img alt="" src="assets/ml101/nonconvex.svg" /></p>
@@ -227,6 +248,10 @@ $$</mathjax></p>
 <hr />
 <p><img alt="" src="assets/ml101/workshop_rl.gif" /></p>
 <p>(example in notebook 🗒)</p>
+<hr />
+<p>through this process you've seen how much decision making we as people had to make with regards to what goes into the algorithm, which one we use, and so on.</p>
+<h1>🤔</h1>
+<p>hopefully it is clear that machine learning can't be claimed to be "fully objective" 🚽 or anything of the sort</p>
 <hr />
 <p>thanks!</p>
 <p>if you want to go deeper: <a href="http://frnsys.com/ai_notes/">frnsys.com/ai_notes/</a></p>
