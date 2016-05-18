@@ -33,9 +33,6 @@ class QLearner():
         self.learning_rate = learning_rate
         self.R = rewards.get if isinstance(rewards, dict) else rewards
 
-        # previous (state, action)
-        self.prev = (None, None)
-
         # our state is just our position
         self.state = state
         self.env = environment
@@ -46,8 +43,8 @@ class QLearner():
     def actions(self, state):
         return self.env.actions(state)
 
-    def take_action(self, action):
-        r, c = self.state
+    def _take_action(self, state, action):
+        r, c = state
         if action == 'up':
             r -= 1
         elif action == 'down':
@@ -56,9 +53,11 @@ class QLearner():
             c += 1
         elif action == 'left':
             c -= 1
-        self.state = (r,c)
 
-    def step(self):
+        # return new state
+        return (r,c)
+
+    def step(self, action=None):
         """take an action"""
         # check possible actions given state
         actions = self.actions(self.state)
@@ -68,21 +67,27 @@ class QLearner():
         if self.state not in self.Q:
             self.Q[self.state] = {a: 0 for a in actions}
 
-        if random.random() < self.explore:
-            action = random.choice(actions)
-        else:
-            action = self._best_action(self.state)
-
-        # learn from the previous action, if there was one
-        self._learn(self.state)
+        if action is None:
+            if random.random() < self.explore:
+                action = random.choice(actions)
+            else:
+                action = self._best_action(self.state)
+        elif action not in actions:
+            raise ValueError('unrecognized action!')
 
         # remember this state and action
-        self.prev = (self.state, action)
+        # so we can later remember
+        # "from this state, taking this action is this valuable"
+        prev_state = self.state
 
         # decay explore
         self.explore = max(0, self.explore - self.decay)
 
-        self.take_action(action)
+        # update state
+        self.state = self._take_action(self.state, action)
+
+        # update the previous state/action based on what we've learned
+        self._learn(prev_state, action, self.state)
         return action
 
     def _best_action(self, state):
@@ -90,34 +95,46 @@ class QLearner():
         actions_rewards = list(self.Q[state].items())
         return max(actions_rewards, key=lambda x: x[1])[0]
 
-    def _learn(self, state):
+    def _learn(self, prev_state, action, new_state):
         """update Q-value for the last taken action"""
-        p_state, p_action = self.prev
-        if p_state is None:
-            return
-        self.Q[p_state][p_action] = self.learning_rate * (self.R(state) + self.discount * max(self.Q[state].values())) - self.Q[p_state][p_action]
-
+        if new_state not in self.Q:
+            self.Q[new_state] = {a: 0 for a in self.actions(new_state)}
+        self.Q[prev_state][action] = self.Q[prev_state][action] + self.learning_rate * (self.R(new_state) + self.discount * max(self.Q[new_state].values()) - self.Q[prev_state][action])
 
 if __name__ == '__main__':
+    interactive = False
+    steps = 500
+    delay = 0.05
+
     env = Environment([
-        [None, -10,0,0,50],
-        [10,0,10,100, 0, -200, 20],
-        [10,0,0, None, 10, None, -10, None],
-        [-10,None,0, 5, 10, None, 1000, 0]
+        [-10,0,0,50],
+        [0,10,100, 0, -100, 20],
+        [0,0, None, 10, None, -10, None],
+        [None,0, 5, 10, None, 500, 0]
     ])
     pos = random.choice(env.positions)
 
     # simple reward function
     def reward(state):
-        # add 1 so that the agent is
-        # encouraged to explore 0-valued spaces
-        return env.value(state) + 1
+        return env.value(state)
 
-    agent = QLearner(pos, env, reward)
-    for i in range(100):
-        agent.step()
+    # try discount=0.1 and discount=0.9
+    agent = QLearner(pos, env, reward, discount=0.1, learning_rate=0.8, decay=0.5/steps)
+    env.render(agent.state)
+    for i in range(steps):
+        if not interactive:
+            agent.step()
+        else:
+            actions = agent.actions(agent.state)
+            action = None
+            while action is None:
+                try:
+                    action = input('what should I do? {} >>> '.format(actions))
+                    agent.step(action)
+                except ValueError:
+                    action = None
         env.render(agent.state)
-        print('step: {}, explore: {}'.format(i, agent.explore))
+        print('step: {}, explore: {}, discount: {}'.format(i, agent.explore, agent.discount))
         for pos, vals in agent.Q.items():
             print('{} -> {}'.format(pos, vals))
-        time.sleep(0.3)
+        time.sleep(delay)

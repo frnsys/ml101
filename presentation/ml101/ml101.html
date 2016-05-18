@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>nomadic</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/override.css">
+
+</head>
+
+<body>
+    
+    <style>
+        html, body {
+            padding: 0 1em;
+            font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+            font-size: 1.5em;
+        }
+        img {
+            max-width: 100%;
+            margin: 0 auto;
+            display: block;
+        }
+        a, a:visited {
+            color: #8765FB;
+        }
+        .slide {
+            border-bottom: 1px solid #eee;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .slide:last-child {
+            border-bottom: none;
+        }
+
+        /* Vertically center */
+        .slide-inner {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        blockquote {
+            margin: 0;
+            padding: 0 2em;
+            border-left: 6px solid #8765FB;
+            color: #5D5D5D;
+        }
+        mark {
+            background: #95FF8E;
+        }
+        pre {
+            color: #8765FB;
+            padding: 2em;
+            font-size: 1.2em;
+            background: #F5F5F5;
+        }
+    </style>
+
+    <main role="main">
+        <div class="note" id="note">
+            <h1>ML101</h1>
+<p>Francis Tseng (@frnsys)</p>
+<hr />
+<p>let's start setting up b/c it will probably take awhile ⏳</p>
+<pre><code>git clone https://github.com/frnsys/ml101
+cd ml101/altai
+pip install -r requirements.txt
+jupyter notebook
+</code></pre>
+<hr />
+<h2>what we'll cover today</h2>
+<ul>
+<li>intuitively understand what machine learning does</li>
+<li>walkthrough two simple examples to introduce important concepts<ul>
+<li>linear learning</li>
+<li>neural networks</li>
+</ul>
+</li>
+<li>connect what we've learned to deeper examples:<ul>
+<li>recurrent neural networks</li>
+<li>reinforcement learning</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p>machine learning is a massive field!</p>
+<p>we'll only be able to go into depth with a couple techniques, but the intuition you'll gain will make it easier to approach other parts.</p>
+<hr />
+<p>the techniques we'll learn today are behind neat things like...</p>
+<ul>
+<li><a href="https://deepmind.com/alpha-go">AlphaGo</a> (beat world Go champion 4-1)</li>
+<li>AIs that can <a href="https://www.youtube.com/watch?v=Vr5MR5lKOc8">play Atari games</a> as well as or better than humans 🕹</li>
+<li><a href="https://www.youtube.com/watch?v=VCdxqn0fcnE">autonomous trick helicopter</a></li>
+<li><a href="https://www.robinsloan.com/notes/writing-with-the-machine/">prose suggestions</a></li>
+<li>algorithmic text generation, e.g. <a href="http://fullest.house/">Fullest House</a></li>
+<li>imitating author styles, e.g. <a href="https://www.countbayesie.com/blog/2015/5/24/writing-finnegans-wake-with-a-recurrent-neural-net">Finnegan's Wake</a></li>
+<li>algorithmic music generation, e.g. <a href="https://medium.com/dbrs-innovation-labs/in-his-novel-galatea-2-2-e9d11c9b7c2a#.xd00cremz">sheet music</a></li>
+<li><a href="http://www.anthology.aclweb.org/D/D14/D14-1074.pdf">computational Chinese poetry</a></li>
+<li><a href="https://youtu.be/-YMfJLFynmA?t=345">autonomous driving robots</a></li>
+<li><a href="https://www.youtube.com/watch?v=W_gxLKSsSIE">a pancake-flipping robot</a></li>
+<li><a href="http://frnsys.com/hosny/">simulations of economies</a></li>
+</ul>
+<hr />
+<p>to do that kind of stuff, we'll learn how to use these tools:</p>
+<ol>
+<li><a href="http://scikit-learn.org/stable/"><code>scikit-learn</code></a> for supervised linear learning</li>
+<li><a href="http://keras.io/"><code>keras</code></a> for neural networks</li>
+<li><a href="http://pandas.pydata.org/"><code>pandas</code></a> for handling data</li>
+<li><a href="http://matplotlib.org/"><code>matplotlib</code></a> and <a href="https://web.stanford.edu/~mwaskom/software/seaborn/"><code>seaborn</code></a> for visualizing data</li>
+</ol>
+<hr />
+<h2>assumptions</h2>
+<ul>
+<li>you have some python 🐍 experience</li>
+<li>you know a bit of high school 🏫 math</li>
+</ul>
+<hr />
+<h2>What do you know about machine learning? 💬</h2>
+<hr />
+<p>ok, so what the heck is machine learning doing? what is it even for?</p>
+<h2>💻🤔</h2>
+<hr />
+<h2>✨~modeling the world~✨</h2>
+<hr />
+<p>we can model phenomena, both natural and artificial, as mathematical functions</p>
+<h1>y ⟶ <mathjax>$f(x)$</mathjax></h1>
+<h1>💫 ⟶ <mathjax>$f(⚛)$</mathjax></h1>
+<h1>💹 ⟶ <mathjax>$f(📰)$</mathjax></h1>
+<h1>🎼 ⟶ <mathjax>$f(🎼)$</mathjax></h1>
+<h1>🎼 ⟶ <mathjax>$f(🎼,😶)$</mathjax></h1>
+<hr />
+<p>which basically means we want to find a mapping of some <strong>input</strong> to some <strong>output</strong> in a way that reflects reality</p>
+<hr />
+<p>machine learning is all about finding these mappings (i.e. <strong>functions</strong>) from <strong>data</strong> (which is assumed to reflect reality)</p>
+<hr />
+<p>so why would you even want to learn one of these functions?</p>
+<hr />
+<p>once you learn your mystery function, there's so much you can do with it:</p>
+<ul>
+<li>predict things</li>
+<li>automate things/make decisions</li>
+<li>gain insight into a system</li>
+<li>emulate a system</li>
+</ul>
+<hr />
+<p>let's work through a concrete example to better understand this.</p>
+<p>(this example may feel a bit disconnected, but I promise it will make the more interesting stuff easier to understand)</p>
+<hr />
+<p>you're a fashion company and you want to create a line of on-demand perfect-fit pants.</p>
+<p>the existing waist-size system is imprecise and inconsistent, and you're convinced you can figure out the exact centimeter waste size based on someone's weight alone.</p>
+<p>i.e. we want to <em>predict</em> someone's waist size given their weight.</p>
+<hr />
+<p>to put this another way, you want to find a function that maps someone's weight (input) to a waist size (output).</p>
+<p><mathjax>$$
+\text{size} = f(\text{weight})
+$$</mathjax></p>
+<p>what is <mathjax>$f$</mathjax>??</p>
+<hr />
+<p>how could we come up with such a function? 🤔</p>
+<p>there are <em>infinitely</em> many of them</p>
+<hr />
+<p>first, we can collect some data and try to narrow things down.</p>
+<hr />
+<p>we go out and survey a bunch of people, getting their weight and then measuring their waist size.</p>
+<hr />
+<p>we plot the data:</p>
+<p><img alt="" src="assets/ml101/cow_data.png" /></p>
+<p>what does it look like?</p>
+<hr />
+<p>(kind of like a line)</p>
+<hr />
+<p>remember that a line can be described in the general form of</p>
+<p><mathjax>$$
+y = mx + b
+$$</mathjax></p>
+<hr />
+<p>if we assume that a line fits this data well, and it looks like it does, then we only need to look at functions that take the form <mathjax>$y=mx+b$</mathjax>.</p>
+<hr />
+<p>remember that lines vary depending on what the values of <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax> are:</p>
+<p><img alt="Lines" src="assets/ml101/lines.svg" /></p>
+<p>we say that <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax> <em>parameterize</em> the function (<mathjax>$m$</mathjax> and <mathjax>$b$</mathjax> are called "parameters").</p>
+<hr />
+<p>these parameters define a unique function, so what we're <em>actually</em> looking for is values for <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax>.</p>
+<p>once we get those, we just plug them in and we get our function 🙃</p>
+<hr />
+<p>but...because <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax> could literally be <em>any</em> value, there are also infinite possible lines!</p>
+<hr />
+<p>anyway, we've at least narrowed things down to the point where we can "guess-and-check" different values of <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax>.</p>
+<p>we can eyeball it and seems like if the resulting line is a good fit and stop when we're content.</p>
+<p>(to the notebook 🗒)</p>
+<hr />
+<p>that was pretty tedious...</p>
+<p>what's the best way to deal with tedious processes?</p>
+<hr />
+<p>(have a computer do it)</p>
+<h1>🤖</h1>
+<hr />
+<p>this is in essence what "machine learning" is:</p>
+<h3><em>using computers to learn functions from observations (data)</em></h3>
+<hr />
+<p>so now let's try this with a computer</p>
+<p>(example in notebook 🗒)</p>
+<hr />
+<p>now that we have this function, a customer can give us their weight and we can tailor our pants size to them!</p>
+<hr />
+<p>that worked pretty well didn't it? can we just stop there? why do we even need 🎉~neural networks~🎉?</p>
+<hr />
+<p>let's consider one more example problem.</p>
+<p>we have some data about how many pants we sell throughout the year. we've been pretty wasteful with our production - we'll make a lot of pants some months and sell very few.</p>
+<p>it would be nice if we could <em>predict</em> how many pants we'd sell that month so we produce only that much.</p>
+<hr />
+<p>(example in notebook 🗒)</p>
+<hr />
+<p>essentially every machine learning technique learns what these parameters are, and one of what differentiates algorithms is the approach with which they do this learning.</p>
+<p>another main differentiator is what <em>kinds</em> of functions the algorithm can learn - some can only learn lines, while others can learn much fancier functions. 💪🏽</p>
+<hr />
+<p>the example problems we have seen are called <strong>regression</strong> problems - they involve predicting some continuous value.</p>
+<p>but there is another type of problem - <strong>classification</strong> - that also comes up a lot. in these problems, we want to predict which category some input belongs to.</p>
+<hr />
+<p>with classification problems, we are still trying to find a function, but instead of having it fit "on top" of the data, we want it to weave through the different categories in the data.</p>
+<p><img alt="" src="assets/ml101/decision_boundary.png" /></p>
+<hr />
+<p>(example in notebook 🗒)</p>
+<hr />
+<p>one particularly fun kind of neural network is a <em>recurrent neural network</em> (RNN)</p>
+<p>these are great for modeling <em>sequences</em>, e.g. text📝, music🎶, time series🕐, and so on</p>
+<hr />
+<p>examples:</p>
+<ul>
+<li><a href="https://www.robinsloan.com/notes/writing-with-the-machine/">prose suggestions</a></li>
+<li>algorithmic text generation, e.g. <a href="http://fullest.house/">Fullest House</a></li>
+<li>imitating author styles, e.g. <a href="https://www.countbayesie.com/blog/2015/5/24/writing-finnegans-wake-with-a-recurrent-neural-net">Finnegan's Wake</a></li>
+<li>algorithmic music generation, e.g. <a href="https://medium.com/dbrs-innovation-labs/in-his-novel-galatea-2-2-e9d11c9b7c2a#.xd00cremz">sheet music</a></li>
+<li><a href="http://www.anthology.aclweb.org/D/D14/D14-1074.pdf">computational Chinese poetry</a></li>
+</ul>
+<hr />
+<p>the problem we'll look at is something like:</p>
+<p>given the character sequence "fuc", what character do you think comes next?</p>
+<hr />
+<p>what if I told you the text that preceded it was "my favorite color is"?</p>
+<hr />
+<p>("fuchsia")</p>
+<hr />
+<p>you were very unlikely to get the right answer given just "fuc" - you needed the preceding <em>context</em>.</p>
+<p>if instead I had given the context of "what the", you'd have guessed something different.</p>
+<hr />
+<p>so context is really important, and RNNs are great at learning it.</p>
+<hr />
+<p>sounds like a lot of fun, but there's one hangup...</p>
+<h1>🙁</h1>
+<hr />
+<h2>what if the inputs we want to use aren't numbers? 🤔</h2>
+<p>for example, how do you put a piece of text into a function?</p>
+<h1>📖 ⟶ 🔢</h1>
+<p>how do you <em>represent</em> it as a number?</p>
+<hr />
+<p>this is the problem of <em>representation</em>, and it is key to machine learning.</p>
+<hr />
+<p>for text, one option is to map each word to a unique number.</p>
+<h1>🙃</h1>
+<hr />
+<p>(example in notebook 🗒)</p>
+<hr />
+<p>one last kind of machine learning that I really enjoy</p>
+<hr />
+<p><a href="https://www.youtube.com/watch?v=NV9xViSfoBA">pacman example</a></p>
+<hr />
+<p>how would you program an agent to play that well?</p>
+<hr />
+<p>what we've seen so far is pretty cool, but things <em>really</em> get fun when we start designing agents that can act independently</p>
+<p>where they can interact with an environment on their own, learn from it, and develop new behaviors 🤖</p>
+<p><strong>reinforcement learning</strong> agents can learn optimal behaviors given new and unfamiliar environments. this can be games, or business management, or controlling robots, etc!</p>
+<hr />
+<p>in <em>Humans of Simulated New York</em> we used reinforcement learning to simulate the government and businesses who try to respond to demands of the market, the needs of their workers, desire to increase profits (in the case of businesses) or the welfare of their citizens (in the case of the government).</p>
+<p>e.g. when a business has leftover stock, they learn to produce less, if they have excess, they try to increase profit margins, etc</p>
+<hr />
+<p>reinforcement learning is behind neat stuff like Google DeepMind's <em>AlphaGo</em> 🏆 and their <a href="https://www.youtube.com/watch?v=Vr5MR5lKOc8">Atari-playing AIs</a> 🕹</p>
+<hr />
+<p>the behavior of the agent can be described by (you guessed it) a function, and of course we want to learn it 🎓</p>
+<hr />
+<p>the basic idea:</p>
+<ul>
+<li>we model the world as various <em>states</em> 🙍🏽 the agent can be in.</li>
+<li>the agent can take <em>actions</em> 🏧 that move between these states.</li>
+<li>each state has an associated <em>reward</em> 💰 (or punishment 🗡).</li>
+<li>the agent <em>explores</em> 🗺 these states and learns which sequence of actions tend to lead to more rewards.</li>
+</ul>
+<p>this is given to us by a function, usually called <mathjax>$q$</mathjax>, which, given a state, maps actions to values - so this is the function we want to learn.</p>
+<hr />
+<p><img alt="" src="assets/ml101/mdp.png" /></p>
+<p>a very simple set of agent states and actions. this agent will eventually spend all of its time sleeping 💤.</p>
+<hr />
+<p>a very simple environment for a RL agent is a "grid world"</p>
+<p><img alt="" src="assets/ml101/mdp_grid.png" /></p>
+<hr />
+<p><img alt="" src="assets/ml101/workshop_rl.gif" /></p>
+<p>(example in notebook 🗒)</p>
+<hr />
+<p>one main problem in RL is "exploration vs exploitation".</p>
+<p>do you stick with certain reward, or risk the unknown for possibly greater reward?</p>
+<p>e.g. ordering food at a restaurant, choosing a major in college, etc.</p>
+<hr />
+<p>another problem is "credit assignment" - if something good happens, is it because of the last thing you did? or is it because of a decision you made a long time ago?</p>
+<hr />
+<p>through this process you've seen how much decision making we as people had to make with regards to what goes into the algorithm, which one we use, and so on.</p>
+<h1>🤔</h1>
+<p>hopefully it is clear that machine learning can't be claimed to be "fully objective" 🚽 or anything of the sort</p>
+<hr />
+<p>thanks!</p>
+<p>if you want to go deeper: <a href="http://frnsys.com/ai_notes/">frnsys.com/ai_notes/</a></p>
+<p>~ @frnsys</p>
+        </div>
+        <div id="presentation">
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        var nodes = document.getElementById('note').childNodes,
+            out = document.getElementById('presentation'),
+            els = [[]];
+
+        function build_slide(elms) {
+            var slide = document.createElement('div'),
+                inner = document.createElement('div');
+
+            slide.className = 'slide';
+            inner.className = 'slide-inner';
+
+            for(var j=0; j<elms.length; j++) {
+                inner.appendChild(elms[j]);
+            }
+            slide.appendChild(inner);
+            out.appendChild(slide);
+        }
+
+        function resize_slides() {
+            var slides = document.getElementsByClassName('slide'),
+                win_height = window.innerHeight;
+            for (var i=0; i<slides.length; i++) {
+                var slide_height = slides[i].clientHeight;
+                if (slide_height > win_height) {
+                    var scale = win_height/slide_height,
+                        transform = 'scale(' + scale + ')';
+                    slides[i].style.webkitTransform = transform;
+                    slides[i].style.mozTransform    = transform;
+                    slides[i].style.transform       = transform;
+                }
+                slides[i].style.height = win_height + "px";
+            }
+        }
+        window.onresize = resize_slides();
+
+        // Build slides out of the note html, interpreting `hr` as a slide break.
+        for (var i=0; i<nodes.length; i++) {
+            if (nodes[i].nodeName.toLowerCase() == 'hr') {
+                els.push([]);
+            } else {
+                els[els.length - 1].push(nodes[i]);
+            }
+        }
+        for (var i=0; i<els.length; i++) {
+            build_slide(els[i]);
+        }
+        document.getElementById('note').style.display = 'none';
+        resize_slides();
+
+        // Key navigation.
+        document.onkeydown = function(e) {
+            var slides = document.getElementsByClassName('slide'),
+                curr_slide;
+            for (var i=0; i<slides.length; i++) {
+                var y   = window.pageYOffset,
+                    wh  = window.outerHeight,
+                    h   = slides[i].offsetHeight,
+                    top = slides[i].offsetTop;
+                if (top + h >= y + wh/2 && top + h <= y + wh ||
+                    top <= y + wh/2 && top > y) {
+                    curr_slide = i;
+                    break;
+                }
+            }
+
+            e = e || window.event;
+            switch(e.which || e.keyCode) {
+                case 40: // down
+                    if (i < slides.length - 1)
+                        window.scrollTo(0, slides[i+1].offsetTop);
+                    e.preventDefault();
+                    break;
+                case 38: // up
+                    if (i > 0)
+                        window.scrollTo(0, slides[i-1].offsetTop);
+                    e.preventDefault();
+                    break;
+            }
+        }
+    </script>
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script>
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [["$","$"]],
+                displayMath: [['$$','$$']],
+                processEscapes: true
+            }
+        });
+        MathJax.Hub.Startup.onload();
+    </script>
+
+</body>
+</html>
