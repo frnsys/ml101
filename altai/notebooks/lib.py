@@ -1,6 +1,14 @@
 import math
 import random
+import numpy as np
 from blessings import Terminal
+
+
+# used to visualize lines
+def make_line(m, b, frm=0, to=200):
+    xs = np.linspace(frm, to, 500)
+    ys = np.dot(xs[:,np.newaxis], [m]) + b
+    return xs, ys
 
 
 class Renderer():
