@@ -1,17 +1,3 @@
-"""
-# Reinforcement Learning
-
-Reinforcement learning is a form of machine learning which is great for autonomous agents. Reinforcement learning agents interact with and learn from their environment. Such agents learn how to make rational decisions under conditions of uncertainty.
-
-AlphaGo uses reinforcement learning in combination with deep neural networks to make decisions on what plays to make.
-
-## Q-Learning
-
-The basic form of reinforcement learning is Q-learning.
-
-Given an environment where actions result in uncertain states, Q-learning allows the agent to learn a _policy_ (that is, a function which chooses an action to state given a state).
-"""
-
 import time
 import random
 from lib import Environment
@@ -101,17 +87,33 @@ class QLearner():
             self.Q[new_state] = {a: 0 for a in self.actions(new_state)}
         self.Q[prev_state][action] = self.Q[prev_state][action] + self.learning_rate * (self.R(new_state) + self.discount * max(self.Q[new_state].values()) - self.Q[prev_state][action])
 
+
+def choose_action(agent):
+    """interactively choose action for agent"""
+    actions = agent.actions(agent.state)
+    action = None
+    while action is None:
+        try:
+            action = input('what should I do? {} >>> '.format(actions))
+            agent.step(action)
+        except ValueError:
+            action = None
+
+
 if __name__ == '__main__':
     interactive = False
     steps = 500
     delay = 0.05
 
+    # define the gridworld environment
     env = Environment([
         [-10,0,0,50],
         [0,10,100, 0, -100, 20],
         [0,0, None, 10, None, -10, None],
         [None,0, 5, 10, None, 500, 0]
     ])
+
+    # start at a random position
     pos = random.choice(env.positions)
 
     # simple reward function
@@ -121,20 +123,17 @@ if __name__ == '__main__':
     # try discount=0.1 and discount=0.9
     agent = QLearner(pos, env, reward, discount=0.1, learning_rate=0.8, decay=0.5/steps)
     env.render(agent.state)
+
     for i in range(steps):
+
+        # make a move
         if not interactive:
             agent.step()
         else:
-            actions = agent.actions(agent.state)
-            action = None
-            while action is None:
-                try:
-                    action = input('what should I do? {} >>> '.format(actions))
-                    agent.step(action)
-                except ValueError:
-                    action = None
+            choose_action(agent)
+
         env.render(agent.state)
-        print('step: {}, explore: {}, discount: {}'.format(i, agent.explore, agent.discount))
+        print('step: {:03d}/{:03d}, explore: {:.2f}, discount: {}'.format(i, steps, agent.explore, agent.discount))
         for pos, vals in agent.Q.items():
             print('{} -> {}'.format(pos, vals))
         time.sleep(delay)

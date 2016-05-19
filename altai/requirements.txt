@@ -8,4 +8,4 @@ scipy==0.17.1
 seaborn==0.7.0
 Theano==0.8.2
 jupyter==1.0.0
-
+h5py==2.6.0

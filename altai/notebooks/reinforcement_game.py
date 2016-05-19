@@ -58,6 +58,7 @@ class Game():
         r, c = self.target
 
         self.set_position(self.target, 0)
+        self.set_paddle(1) # in case the target is on the paddle
         self.target = (r+1, c)
 
         # off the map, it's gone
@@ -205,11 +206,19 @@ if __name__ == '__main__':
         agent.save(fname)
 
     game.reset()
+    game.render()
+
+    start = False
+    while not start:
+        resp = input('start? >>> ')
+        if resp == 'start':
+            start = True
+
     reward = 0
     while reward == 0:
-        game.render()
         action = agent.choose_action()
         game.move(action)
         reward = game.update()
+        game.render()
         sleep(0.1)
     print('winner!' if reward == 1 else 'loser!')
