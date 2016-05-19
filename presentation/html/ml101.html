@@ -57,6 +57,10 @@
             font-size: 1.2em;
             background: #F5F5F5;
         }
+        iframe {
+            display: block;
+            margin: 0 auto;
+        }
     </style>
 
     <main role="main">
@@ -66,13 +70,45 @@
 <hr />
 <p>let's start setting up b/c it will probably take awhile ⏳</p>
 <pre><code>git clone https://github.com/frnsys/ml101
-cd ml101
+cd ml101/altai
 pip install -r requirements.txt
 jupyter notebook
 </code></pre>
 <hr />
 <h2>what we'll cover today</h2>
-<p>how to use:</p>
+<ul>
+<li>intuitively understand what machine learning does</li>
+<li>walkthrough two simple examples to introduce important concepts<ul>
+<li>linear learning</li>
+<li>neural networks</li>
+</ul>
+</li>
+<li>connect what we've learned to deeper examples:<ul>
+<li>recurrent neural networks</li>
+<li>reinforcement learning</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p>machine learning is a massive field!</p>
+<p>we'll only be able to go into depth with a couple techniques, but the intuition you'll gain will make it easier to approach other parts.</p>
+<hr />
+<p>the techniques we'll learn today are behind neat things like...</p>
+<ul>
+<li><a href="https://deepmind.com/alpha-go">AlphaGo</a> (beat world Go champion 4-1)</li>
+<li>AIs that can <a href="https://www.youtube.com/watch?v=Vr5MR5lKOc8">play Atari games</a> as well as or better than humans 🕹</li>
+<li><a href="https://www.youtube.com/watch?v=VCdxqn0fcnE">autonomous trick helicopter</a></li>
+<li><a href="https://www.robinsloan.com/notes/writing-with-the-machine/">prose suggestions</a></li>
+<li>algorithmic text generation, e.g. <a href="http://fullest.house/">Fullest House</a></li>
+<li>imitating author styles, e.g. <a href="https://www.countbayesie.com/blog/2015/5/24/writing-finnegans-wake-with-a-recurrent-neural-net">Finnegan's Wake</a></li>
+<li>algorithmic music generation, e.g. <a href="https://medium.com/dbrs-innovation-labs/in-his-novel-galatea-2-2-e9d11c9b7c2a#.xd00cremz">sheet music</a></li>
+<li><a href="http://www.anthology.aclweb.org/D/D14/D14-1074.pdf">computational Chinese poetry</a></li>
+<li><a href="https://youtu.be/-YMfJLFynmA?t=345">autonomous driving robots</a></li>
+<li><a href="https://www.youtube.com/watch?v=W_gxLKSsSIE">a pancake-flipping robot</a></li>
+<li><a href="http://frnsys.com/hosny/">simulations of economies</a></li>
+</ul>
+<hr />
+<p>to do that kind of stuff, we'll learn how to use these tools:</p>
 <ol>
 <li><a href="http://scikit-learn.org/stable/"><code>scikit-learn</code></a> for supervised linear learning</li>
 <li><a href="http://keras.io/"><code>keras</code></a> for neural networks</li>
@@ -100,19 +136,11 @@ jupyter notebook
 <h1>🎼 ⟶ <mathjax>$f(🎼)$</mathjax></h1>
 <h1>🎼 ⟶ <mathjax>$f(🎼,😶)$</mathjax></h1>
 <hr />
-<p>how could we come up with such a function? 🤔</p>
-<p>there are <em>infinitely</em> many of them</p>
+<p>which basically means we want to find a mapping of some <strong>input</strong> to some <strong>output</strong> in a way that reflects reality</p>
 <hr />
-<p>we could go and observe a lot of things and then try to figure out some equation that matched what we observed.</p>
-<h1>🌎👀</h1>
+<p>machine learning is all about finding these mappings (i.e. <strong>functions</strong>) from <strong>data</strong> (which is assumed to reflect reality)</p>
 <hr />
-<p>but that is a tedious process...</p>
-<hr />
-<p>ok, let's have computers do it for us then</p>
-<h1>🤖</h1>
-<hr />
-<p>this is in essence what "machine learning" is:</p>
-<h3><em>using computers to learn functions from observations (data)</em></h3>
+<p>so why would you even want to learn one of these functions?</p>
 <hr />
 <p>once you learn your mystery function, there's so much you can do with it:</p>
 <ul>
@@ -122,86 +150,118 @@ jupyter notebook
 <li>emulate a system</li>
 </ul>
 <hr />
-<p>let's get more concrete</p>
-<h1>🐄</h1>
+<p>let's work through a concrete example to better understand this.</p>
+<p>(this example may feel a bit disconnected, but I promise it will make the more interesting stuff easier to understand)</p>
 <hr />
-<p>let's say you're a farmer. you have a herd of cows.</p>
-<p>🐄🐄🐄🐄</p>
-<p>you want to estimate how heavy a cow will grow to be given its birth weight.</p>
+<p>you're a fashion company and you want to create a line of on-demand perfect-fit pants.</p>
+<p>the existing waist-size system is imprecise and inconsistent, and you're convinced you can figure out the exact centimeter waste size based on someone's weight alone.</p>
+<p>i.e. we want to <em>predict</em> someone's waist size given their weight.</p>
 <hr />
-<p>you collect some data which looks like this:</p>
+<p>to put this another way, you want to find a function that maps someone's weight (input) to a waist size (output).</p>
+<p><mathjax>$$
+\text{size} = f(\text{weight})
+$$</mathjax></p>
+<p>what is <mathjax>$f$</mathjax>??</p>
+<hr />
+<p>how could we come up with such a function? 🤔</p>
+<p>there are <em>infinitely</em> many of them</p>
+<hr />
+<p>first, we can collect some data and try to narrow things down.</p>
+<hr />
+<p>we go out and survey a bunch of people, getting their weight and then measuring their waist size.</p>
+<hr />
+<p>we plot the data:</p>
 <p><img alt="" src="assets/ml101/cow_data.png" /></p>
+<p>what does it look like?</p>
 <hr />
-<p>we can try to learn a function that <em>fits</em> this data; i.e. that best describes (models) the relationship between the birth weight and mature weight.</p>
-<hr />
-<p>to better appreciate all the help computers give us, let's try this manually first.</p>
-<hr />
-<p><img alt="" src="assets/ml101/cow_data.png" /></p>
-<p>this data looks like a line doesn't it?</p>
+<p>(kind of like a line)</p>
 <hr />
 <p>remember that a line can be described in the general form of</p>
 <p><mathjax>$$
 y = mx + b
 $$</mathjax></p>
 <hr />
+<p>if we assume that a line fits this data well, and it looks like it does, then we only need to look at functions that take the form <mathjax>$y=mx+b$</mathjax>.</p>
+<hr />
 <p>remember that lines vary depending on what the values of <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax> are:</p>
 <p><img alt="Lines" src="assets/ml101/lines.svg" /></p>
 <p>we say that <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax> <em>parameterize</em> the function (<mathjax>$m$</mathjax> and <mathjax>$b$</mathjax> are called "parameters").</p>
 <hr />
-<p>these parameters define a unique function, and thus when we "learn" a particular function, we are actually learning these parameters!</p>
+<p>these parameters define a unique function, so what we're <em>actually</em> looking for is values for <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax>.</p>
+<p>once we get those, we just plug them in and we get our function 🙃</p>
 <hr />
-<p>if we wanted to learn these parameters manually, we could use the good old "guess-and-check" method:</p>
-<p><img alt="" src="assets/ml101/cow_guess.png" /></p>
+<p>but...because <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax> could literally be <em>any</em> value, there are also infinite possible lines!</p>
 <hr />
-<p>this was an easy dataset - real world data may be much more convoluted, not describable by a line, in many more dimensions, etc...manually figuring out the function gets kinda hard then.</p>
-<p><img alt="" src="assets/ml101/nonconvex.svg" /></p>
+<p>anyway, we've at least narrowed things down to the point where we can "guess-and-check" different values of <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax>.</p>
+<p>we can eyeball it and seems like if the resulting line is a good fit and stop when we're content.</p>
+<p>(to the notebook 🗒)</p>
+<hr />
+<p>that was pretty tedious...</p>
+<p>what's the best way to deal with tedious processes?</p>
+<hr />
+<p>(have a computer do it)</p>
+<h1>🤖</h1>
+<hr />
+<p>this is in essence what "machine learning" is:</p>
+<h3><em>using computers to learn functions from observations (data)</em></h3>
+<hr />
+<p>so now let's try this with a computer</p>
+<p>(example in notebook 🗒)</p>
+<hr />
+<p>now that we have this function, a customer can give us their weight and we can tailor our pants size to them!</p>
+<hr />
+<p>that worked pretty well didn't it? can we just stop there? why do we even need 🎉~neural networks~🎉?</p>
+<hr />
+<p>let's consider one more example problem.</p>
+<p>we have some data about how many pants we sell throughout the year. we've been pretty wasteful with our production - we'll make a lot of pants some months and sell very few.</p>
+<p>it would be nice if we could <em>predict</em> how many pants we'd sell that month so we produce only that much.</p>
 <hr />
 <p>(example in notebook 🗒)</p>
 <hr />
-<p>essentially every machine learning technique learns what these parameters are, and one of what differentiates algorithms is the approach with which they do this learning.</p>
-<p>another main differentiator is what <em>kinds</em> of functions the algorithm can learn - some can only learn lines, while others can learn much fancier functions.</p>
+<p>essentially every machine learning technique (e.g. linear regression, neural networks, SVMs, naive Bayes, etc) learns what these parameters are.</p>
+<p>algorithms are differentiated by:</p>
+<ul>
+<li>the approach with which they do this learning.</li>
+<li>what <em>kinds</em> of functions the algorithm can learn - some can only learn lines, while others can learn much fancier functions. 💪🏽</li>
+</ul>
 <hr />
-<h2>so how the heck does the algorithm learn the parameters?</h2>
-<h1>🤔</h1>
+<p>the example problems we have seen are called <strong>regression</strong> problems - they involve predicting some continuous value.</p>
+<p>but there is another type of problem - <strong>classification</strong> - that also comes up a lot. in these problems, we want to predict which category some input belongs to.</p>
 <hr />
-<p>it varies, but usually via a <em>cost</em> or <em>objective</em> function (often notated <mathjax>$J$</mathjax>).</p>
-<p>this tells the algorithm how "wrong" it is with its current guesses for the parameters on the training data.</p>
+<p>with classification problems, we are still trying to find a function, but instead of having it fit "on top" of the data, we want it to weave through the different categories in the data.</p>
+<p><img alt="" src="assets/ml101/decision_boundary.png" /></p>
 <hr />
-<p>the algorithm iteratively tries different parameters (i.e. different guesses at the underlying function) until it can minimize this error.</p>
-<p>that is, it tries to <em>optimize</em> the parameters for the cost function.</p>
+<p>(example in notebook 🗒)</p>
 <hr />
-<p>different optimization algorithms have different ways of picking new guesses.</p>
-<p>the most popular one is <em>gradient descent</em>, which looks for the direction in which the error is decreasing, and then takes a step in that direction.</p>
-<h1>🗻</h1>
-<hr />
-<p>if we were just finding <mathjax>$m$</mathjax>, this might look like:</p>
-<p><img alt="" src="assets/ml101/gradient_descent.svg" /></p>
-<hr />
-<p>if we're finding both <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax>, this might look like:</p>
-<p><img alt="" src="assets/ml101/gradient_descent_3d.svg" /></p>
-<hr />
-<p>there are other optimization methods such as genetic algorithms, particle swarm optimization, etc...</p>
-<p>but gradient descent is by far the most common.</p>
-<hr />
-<p>another example:</p>
-<h1>the office of social health</h1>
-<p><img alt="" src="assets/ml101/safety_in_numbers.sm.jpg" /></p>
-<p>(based on the psycho-pass series)</p>
-<hr />
-<h2>ok, let's switch gears and talk about 🎉~neural networks~🎉</h2>
-<p>they have many, many fun and interesting applications</p>
-<hr />
-<p>a neural network does essentially what we were doing before, but it can learn more sophisticated functions 💪🏽</p>
-<hr />
-<p><img alt="" src="assets/ml101/nn.png" /></p>
-<h6>(from <a href="http://neuralnetworksanddeeplearning.com/">neuralnetworksanddeeplearning.com</a>)</h6>
-<hr />
-<p>one particularly fun kind of neural network is a <em>recurrent neural network</em></p>
-<p><img alt="" src="assets/ml101/rnn.png" /></p>
-<h6>(from <a href="http://www.hexahedria.com/2015/08/03/composing-music-with-recurrent-neural-networks/">hexahedria</a>)</h6>
+<p>one particularly fun kind of neural network is a <em>recurrent neural network</em> (RNN)</p>
 <p>these are great for modeling <em>sequences</em>, e.g. text📝, music🎶, time series🕐, and so on</p>
 <hr />
-<p>there are examples abound here, such as generated texts in the style of <a href="https://www.countbayesie.com/blog/2015/5/24/writing-finnegans-wake-with-a-recurrent-neural-net">Finnegan's Wake</a>, endless new episode scripts for <a href="http://fullest.house/">Full House</a>, and algorithimically-composed <a href="https://medium.com/dbrs-innovation-labs/in-his-novel-galatea-2-2-e9d11c9b7c2a#.xd00cremz">sheet music</a>.</p>
+<p>examples:</p>
+<ul>
+<li><a href="https://www.robinsloan.com/notes/writing-with-the-machine/">prose suggestions</a></li>
+<li>algorithmic text generation, e.g. <a href="http://fullest.house/">Fullest House</a></li>
+<li>imitating author styles, e.g. <a href="https://www.countbayesie.com/blog/2015/5/24/writing-finnegans-wake-with-a-recurrent-neural-net">Finnegan's Wake</a></li>
+<li>algorithmic music generation, e.g. <a href="https://medium.com/dbrs-innovation-labs/in-his-novel-galatea-2-2-e9d11c9b7c2a#.xd00cremz">sheet music</a></li>
+<li><a href="http://www.anthology.aclweb.org/D/D14/D14-1074.pdf">computational Chinese poetry</a></li>
+</ul>
+<hr />
+<p>the problem we'll look at is something like:</p>
+<p>given the character "f", what character do you think comes next?</p>
+<hr />
+<p>ok, what if I give you the character <em>sequence</em> "fu".</p>
+<p>now what do you think comes next?</p>
+<hr />
+<p>ok, what if I extend that sequence to "fuc".</p>
+<p>now what do you think comes next?</p>
+<hr />
+<p>what if I told you the text that preceded it was "my favorite color is"?</p>
+<hr />
+<p>("fuchsia")</p>
+<hr />
+<p>you were very unlikely to get the right answer given just "f" or "fu" or "fuc" - you needed the <em>context</em>.</p>
+<p>if instead I had given the context of "what the", you'd have guessed something different.</p>
+<hr />
+<p>so context is really important, and RNNs are great at learning it.</p>
 <hr />
 <p>sounds like a lot of fun, but there's one hangup...</p>
 <h1>🙁</h1>
@@ -212,20 +272,26 @@ $$</mathjax></p>
 <p>how do you <em>represent</em> it as a number?</p>
 <hr />
 <p>this is the problem of <em>representation</em>, and it is key to machine learning.</p>
-<p>coming up with good representations is called <em>feature engineering</em> and it can be more of an art than a skill.</p>
-<h1>🛠 + 🎨</h1>
 <hr />
 <p>for text, one option is to map each word to a unique number.</p>
 <h1>🙃</h1>
 <hr />
 <p>(example in notebook 🗒)</p>
 <hr />
-<p>one last kind of machine learning that I really enjoy:</p>
-<h2>reinforcement learning</h2>
-<h1>🐶</h1>
+<p>one last kind of machine learning that I really enjoy</p>
 <hr />
-<p>what we've seen so far is pretty cool, but things <em>really</em> get fun when we start designing agents that can act independently;</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NV9xViSfoBA" frameborder="0" allowfullscreen></iframe>
+
+<hr />
+<p>how would you program an agent to play that well?</p>
+<hr />
+<p>what we've seen so far is pretty cool, but things <em>really</em> get fun when we start designing agents that can act independently</p>
 <p>where they can interact with an environment on their own, learn from it, and develop new behaviors 🤖</p>
+<p><strong>reinforcement learning</strong> agents can learn optimal behaviors given new and unfamiliar environments. this can be games, or business management, or controlling robots, etc!</p>
+<hr />
+<p><img alt="" src="assets/ml101/hosny.gif" /></p>
+<p>in <em>Humans of Simulated New York</em> we used reinforcement learning to simulate the government and businesses who try to respond to demands of the market, the needs of their workers, desire to increase profits (in the case of businesses) or the welfare of their citizens (in the case of the government).</p>
+<p>e.g. when a business has leftover stock, they learn to produce less, if they have excess, they try to increase profit margins, etc</p>
 <hr />
 <p>reinforcement learning is behind neat stuff like Google DeepMind's <em>AlphaGo</em> 🏆 and their <a href="https://www.youtube.com/watch?v=Vr5MR5lKOc8">Atari-playing AIs</a> 🕹</p>
 <hr />
@@ -248,6 +314,12 @@ $$</mathjax></p>
 <hr />
 <p><img alt="" src="assets/ml101/workshop_rl.gif" /></p>
 <p>(example in notebook 🗒)</p>
+<hr />
+<p>one main problem in RL is "exploration vs exploitation".</p>
+<p>do you stick with certain reward, or risk the unknown for possibly greater reward?</p>
+<p>e.g. ordering food at a restaurant, choosing a major in college, etc.</p>
+<hr />
+<p>another problem is "credit assignment" - if something good happens, is it because of the last thing you did? or is it because of a decision you made a long time ago?</p>
 <hr />
 <p>through this process you've seen how much decision making we as people had to make with regards to what goes into the algorithm, which one we use, and so on.</p>
 <h1>🤔</h1>
