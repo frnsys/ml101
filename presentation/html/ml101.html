@@ -137,18 +137,39 @@ jupyter notebook
 <h1>🎼 ⟶ <mathjax>$f(🎼,😶)$</mathjax></h1>
 <hr />
 <p>which basically means we want to find a mapping of some <strong>input</strong> to some <strong>output</strong> in a way that reflects reality</p>
+<p><img alt="http://mathinsight.org/function_machine" src="assets/ml101/function_machine.png" /></p>
 <hr />
 <p>machine learning is all about finding these mappings (i.e. <strong>functions</strong>) from <strong>data</strong> (which is assumed to reflect reality)</p>
 <hr />
 <p>so why would you even want to learn one of these functions?</p>
 <hr />
-<p>once you learn your mystery function, there's so much you can do with it:</p>
-<ul>
-<li>predict things</li>
-<li>automate things/make decisions</li>
-<li>gain insight into a system</li>
-<li>emulate a system</li>
-</ul>
+<p>once you learn your mystery function, there's so much you can do with it...</p>
+<hr />
+<h3>make predictions</h3>
+<p><img alt="" src="assets/ml101/colornet.jpg" /><br />
+<a href="https://github.com/pavelgonchar/colornet">Colornet</a></p>
+<hr />
+<p><img alt="" src="assets/ml101/thingscoop.png" /><br />
+<a href="https://github.com/agermanidis/thingscoop">thingscoop</a></p>
+<hr />
+<h3>automate decisions</h3>
+<p><img alt="" src="assets/ml101/world_leader_tips.png" /></p>
+<p><a href="http://uselesspress.org/things/world-leader-tips/">World Leader Tips</a> (Brian Clifton)</p>
+<hr />
+<p><img alt="" src="assets/ml101/fashion.jpg" /></p>
+<p><a href="http://hi.cs.waseda.ac.jp/~esimo/en/research/fashionability/">Neuroaesthetics in Fashion</a> (Edgar Simo-Serra, Sanja Fidler, Francesc Moreno-Noguer, Raquel Urtasun)</p>
+<hr />
+<h3>gain insight into a system</h3>
+<p><img alt="" src="assets/ml101/confidant_model.png" /><br />
+<a href="http://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1254&amp;context=sociologyfacpub">Social Distance in the United States: Sex, Race, Religion, Age, and Education Homophily among Confidants, 1985 to 2004</a> (Jeffrey A. Smith, Miller McPherson, Lynn Smith-Lovin, University of Nebraska - Lincoln, 2014)</p>
+<hr />
+<h3>emulate a system</h3>
+<p>e.g. modify this image to match this person's style</p>
+<p><img alt="" src="assets/ml101/stylenet.jpg" /><br />
+<a href="http://arxiv.org/pdf/1508.06576v1.pdf">A Neural Algorithm of Artistic Style</a> (Leon A. Gatys, Alexander S. Ecker, Matthias Bethge)</p>
+<hr />
+<p><img alt="" src="assets/ml101/geocities_forever.png" /></p>
+<p><a href="http://www.theverge.com/2016/5/11/11656122/geocities-forever-90s-auto-generated-web-design">Geocities Forever</a> (Aanand Prasad)</p>
 <hr />
 <p>let's work through a concrete example to better understand this.</p>
 <p>(this example may feel a bit disconnected, but I promise it will make the more interesting stuff easier to understand)</p>
@@ -171,7 +192,7 @@ $$</mathjax></p>
 <p>we go out and survey a bunch of people, getting their weight and then measuring their waist size.</p>
 <hr />
 <p>we plot the data:</p>
-<p><img alt="" src="assets/ml101/cow_data.png" /></p>
+<p><img alt="" src="assets/ml101/data.png" /></p>
 <p>what does it look like?</p>
 <hr />
 <p>(kind of like a line)</p>
@@ -189,6 +210,8 @@ $$</mathjax></p>
 <hr />
 <p>these parameters define a unique function, so what we're <em>actually</em> looking for is values for <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax>.</p>
 <p>once we get those, we just plug them in and we get our function 🙃</p>
+<hr />
+<p><img alt="" src="assets/ml101/data_line.png" /></p>
 <hr />
 <p>but...because <mathjax>$m$</mathjax> and <mathjax>$b$</mathjax> could literally be <em>any</em> value, there are also infinite possible lines!</p>
 <hr />
@@ -227,6 +250,12 @@ $$</mathjax></p>
 <hr />
 <p>the example problems we have seen are called <strong>regression</strong> problems - they involve predicting some continuous value.</p>
 <p>but there is another type of problem - <strong>classification</strong> - that also comes up a lot. in these problems, we want to predict which category some input belongs to.</p>
+<p><img alt="" src="assets/ml101/cat_dog_classifier.png" /><br />
+<a href="http://www.slideshare.net/andrewgardner5811/deep-learning-for-data-scientists-dsatl-talk-alpharetta-20140108">Deep Learning for Data Scientists</a> (Andrew B. Gardner)</p>
+<hr />
+<p>we can have more than just two categories:</p>
+<p><img alt="" src="assets/ml101/imagenet_classification.png" /><br />
+<a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">ImageNet Classification with Deep convolutional Neural Networks</a> (Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton)</p>
 <hr />
 <p>with classification problems, we are still trying to find a function, but instead of having it fit "on top" of the data, we want it to weave through the different categories in the data.</p>
 <p><img alt="" src="assets/ml101/decision_boundary.png" /></p>
@@ -256,7 +285,7 @@ $$</mathjax></p>
 <hr />
 <p>what if I told you the text that preceded it was "my favorite color is"?</p>
 <hr />
-<p>("fuchsia")</p>
+<p><img alt="" src="assets/ml101/fuchsia.jpg" /></p>
 <hr />
 <p>you were very unlikely to get the right answer given just "f" or "fu" or "fuc" - you needed the <em>context</em>.</p>
 <p>if instead I had given the context of "what the", you'd have guessed something different.</p>
