@@ -95,9 +95,12 @@ def choose_action(agent):
     while action is None:
         try:
             action = input('what should I do? {} >>> '.format(actions))
+            if action == 'quit':
+                return True
             agent.step(action)
         except ValueError:
             action = None
+    return False
 
 
 if __name__ == '__main__':
@@ -124,7 +127,9 @@ if __name__ == '__main__':
 
     i = 0
     while True:
-        choose_action(agent)
+        done = choose_action(agent)
+        if done:
+            break
         env.render(agent.state)
         print('step: {:03d}, explore: {:.2f}, discount: {}'.format(i, agent.explore, agent.discount))
         for pos, vals in agent.Q.items():
