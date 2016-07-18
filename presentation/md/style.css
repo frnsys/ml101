@@ -1,0 +1,23 @@
+html, body {
+    background: blue;
+    color: white;
+}
+
+figcaption {
+    color: rgb(124, 158, 255);
+}
+
+blockquote {
+    text-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+    color: #64FE4E;
+    border-left: 6px solid #E8FB65;
+}
+
+blockquote strong {
+    color: rgb(230, 243, 102);
+}
+
+a, a:visited {
+    color: #FE9E9E;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.4);
+}

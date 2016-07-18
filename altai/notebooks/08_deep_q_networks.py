@@ -78,6 +78,7 @@ class Agent():
 
     def load(self, fname):
         self.Q.load_weights(fname)
+        print(self.Q.get_weights())
 
 
 if __name__ == '__main__':
@@ -126,6 +127,7 @@ if __name__ == '__main__':
 
     game.reset()
     game.render()
+    sleep(8)
     reward = 0
     while reward == 0:
         action = agent.choose_action()
@@ -134,3 +136,4 @@ if __name__ == '__main__':
         game.render()
         sleep(0.1)
     print('winner!' if reward == 1 else 'loser!')
+    print('\n\n\n\n\n\n\n\n\n\n\n\n')
