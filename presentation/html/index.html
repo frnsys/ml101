@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>ml101</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    
+<style>
+html, body {
+    overflow: hidden;
+    font-size: 1.5em;
+}
+</style>
+
 </head>
 
 <body>
@@ -99,36 +107,33 @@ jupyter notebook
 <hr />
 <h3>make predictions</h3>
 <hr />
-<p><img alt="" src="assets/colornet.jpg" /><br />
-<a href="https://github.com/pavelgonchar/colornet">Colornet</a></p>
+<figure><img alt="Colornet" src="assets/colornet.jpg" /><figcaption><a href="https://github.com/pavelgonchar/colornet">Colornet</a></figcaption>
+</figure>
 <hr />
-<p><img alt="" src="assets/thingscoop.png" /><br />
-<a href="https://github.com/agermanidis/thingscoop">thingscoop</a></p>
+<figure><img alt="thingscoop" src="assets/thingscoop.png" /><figcaption><a href="https://github.com/agermanidis/thingscoop">thingscoop</a></figcaption>
+</figure>
 <hr />
 <h3>automate decisions</h3>
 <hr />
-<figure><img alt="" src="assets/world_leader_tips.png" /><figcaption></figcaption>
+<figure><img alt="World Leader Tips (Brian Clifton)" src="assets/world_leader_tips.png" /><figcaption><a href="http://uselesspress.org/things/world-leader-tips/">World Leader Tips</a> (Brian Clifton)</figcaption>
 </figure>
-<p><a href="http://uselesspress.org/things/world-leader-tips/">World Leader Tips</a> (Brian Clifton)</p>
 <hr />
-<figure><img alt="" src="assets/fashion.jpg" /><figcaption></figcaption>
+<figure><img alt="Neuroaesthetics in Fashion (Edgar Simo-Serra, Sanja Fidler, Francesc Moreno-Noguer, Raquel Urtasun)" src="assets/fashion.jpg" /><figcaption><a href="http://hi.cs.waseda.ac.jp/~esimo/en/research/fashionability/">Neuroaesthetics in Fashion</a> (Edgar Simo-Serra, Sanja Fidler, Francesc Moreno-Noguer, Raquel Urtasun)</figcaption>
 </figure>
-<p><a href="http://hi.cs.waseda.ac.jp/~esimo/en/research/fashionability/">Neuroaesthetics in Fashion</a> (Edgar Simo-Serra, Sanja Fidler, Francesc Moreno-Noguer, Raquel Urtasun)</p>
 <hr />
 <h3>gain insight into a system</h3>
 <hr />
-<p><img alt="" src="assets/confidant_model.png" /><br />
-<a href="http://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1254&amp;context=sociologyfacpub">Social Distance in the United States: Sex, Race, Religion, Age, and Education Homophily among Confidants, 1985 to 2004</a> (Jeffrey A. Smith, Miller McPherson, Lynn Smith-Lovin, University of Nebraska - Lincoln, 2014)</p>
+<figure><img alt="Social Distance in the United States: Sex, Race, Religion, Age, and Education Homophily among Confidants, 1985 to 2004 (Jeffrey A. Smith, Miller McPherson, Lynn Smith-Lovin, University of Nebraska - Lincoln, 2014)" src="assets/confidant_model.png" /><figcaption><a href="http://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1254&amp;context=sociologyfacpub">Social Distance in the United States: Sex, Race, Religion, Age, and Education Homophily among Confidants, 1985 to 2004</a> (Jeffrey A. Smith, Miller McPherson, Lynn Smith-Lovin, University of Nebraska - Lincoln, 2014)</figcaption>
+</figure>
 <hr />
 <h3>emulate a system</h3>
 <hr />
 <p>e.g. modify this image to match this person's style</p>
-<p><img alt="" src="assets/stylenet.jpg" /><br />
-<a href="http://arxiv.org/pdf/1508.06576v1.pdf">A Neural Algorithm of Artistic Style</a> (Leon A. Gatys, Alexander S. Ecker, Matthias Bethge)</p>
-<hr />
-<figure><img alt="" src="assets/geocities_forever.png" /><figcaption></figcaption>
+<figure><img alt="A Neural Algorithm of Artistic Style (Leon A. Gatys, Alexander S. Ecker, Matthias Bethge)" src="assets/stylenet.jpg" /><figcaption><a href="http://arxiv.org/pdf/1508.06576v1.pdf">A Neural Algorithm of Artistic Style</a> (Leon A. Gatys, Alexander S. Ecker, Matthias Bethge)</figcaption>
 </figure>
-<p><a href="http://www.theverge.com/2016/5/11/11656122/geocities-forever-90s-auto-generated-web-design">Geocities Forever</a> (Aanand Prasad)</p>
+<hr />
+<figure><img alt="Geocities Forever (Aanand Prasad)" src="assets/geocities_forever.png" /><figcaption><a href="http://www.theverge.com/2016/5/11/11656122/geocities-forever-90s-auto-generated-web-design">Geocities Forever</a> (Aanand Prasad)</figcaption>
+</figure>
 <hr />
 <p>let's work through a concrete example to better understand this.</p>
 <p>(this example may feel a bit disconnected, but I promise it will make the more interesting stuff easier to understand)</p>
@@ -212,12 +217,12 @@ $$</mathjax></p>
 <hr />
 <p>the example problems we have seen are called <strong>regression</strong> problems - they involve predicting some continuous value.</p>
 <p>but there is another type of problem - <strong>classification</strong> - that also comes up a lot. in these problems, we want to predict which category some input belongs to.</p>
-<p><img alt="" src="assets/cat_dog_classifier.png" /><br />
-<a href="http://www.slideshare.net/andrewgardner5811/deep-learning-for-data-scientists-dsatl-talk-alpharetta-20140108">Deep Learning for Data Scientists</a> (Andrew B. Gardner)</p>
+<figure><img alt="Deep Learning for Data Scientists (Andrew B. Gardner)" src="assets/cat_dog_classifier.png" /><figcaption><a href="http://www.slideshare.net/andrewgardner5811/deep-learning-for-data-scientists-dsatl-talk-alpharetta-20140108">Deep Learning for Data Scientists</a> (Andrew B. Gardner)</figcaption>
+</figure>
 <hr />
 <p>we can have more than just two categories:</p>
-<p><img alt="" src="assets/imagenet_classification.png" /><br />
-<a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">ImageNet Classification with Deep convolutional Neural Networks</a> (Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton)</p>
+<figure><img alt="ImageNet Classification with Deep convolutional Neural Networks (Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton)" src="assets/imagenet_classification.png" /><figcaption><a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">ImageNet Classification with Deep convolutional Neural Networks</a> (Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton)</figcaption>
+</figure>
 <hr />
 <p>with classification problems, we are still trying to find a function, but instead of having it fit "on top" of the data, we want it to weave through the different categories in the data.</p>
 <figure><img alt="" src="assets/decision_boundary.png" /><figcaption></figcaption>
@@ -337,7 +342,8 @@ $$</mathjax></p>
 <hr />
 <p>thanks!</p>
 <p>if you want to go deeper: <a href="http://frnsys.com/ai_notes/">frnsys.com/ai_notes/</a></p>
-<p>~ @frnsys</p>
+<p>questions? comments?<br />
+message me: @frnsys</p>
         </div>
         <div id="presentation">
         </div>
@@ -365,37 +371,38 @@ $$</mathjax></p>
             for(var j=0; j<elms.length; j++) {
                 slide.appendChild(elms[j]);
             }
+
+            if (slide.getElementsByClassName('background').length > 0) {
+                slide.className += ' has-background';
+            }
             out.appendChild(slide);
             return slide;
         }
 
         function scale_slides() {
             var slides = document.getElementsByClassName('slide'),
+                win_width = window.innerWidth,
                 win_height = window.innerHeight;
             for (var i=0; i<slides.length; i++) {
                 var slide = slides[i],
-                    slide_height = slide.scrollHeight;
-                if (slide_height > win_height) {
-                    var scale = win_height/slide_height,
-                        transform = 'scale(' + scale + ')';
-                    slide.style.transform       = transform;
+                    slide_width = slide.scrollWidth,
+                    slide_height = slide.scrollHeight,
+                    scale = Math.min(win_width/slide_width, win_height/slide_height);
+                if (scale < 1) {
+                    var scaled_width = slide_width * scale,
+                        offset = win_width/2 - scaled_width/2;
+                    slide.style.transform       = 'translate(' + offset + 'px, 0) scale(' + scale + ')';
                     slide.style.transformOrigin = '0 0';
 
-                    // lock-in the width of scaled images
-                    // if we don't, the image could scale up when we change the slide width (below)
-                    var imgs = slide.getElementsByTagName('img');
-                    for (var j=0; j<imgs.length; j++) {
-                        var computedWidth = window.getComputedStyle(imgs[j], null).getPropertyValue('width');
-                        imgs[j].style.width = computedWidth;
+                    // compensate background scaling
+                    var backgrounds = slide.getElementsByClassName('background');
+                    for (var j=0; j < backgrounds.length; j++) {
+                        backgrounds[j].style.transform = 'scale(' + 1/scale + ')';
                     }
-
-                    // manually set the slide width so we can use the full window width (not just the scaled slide width)
-                    var paddingLeft = parseInt(window.getComputedStyle(slide, null).getPropertyValue('padding-left')),
-                        paddingRight = parseInt(window.getComputedStyle(slide, null).getPropertyValue('padding-right'));
-                    slide.style.width = ((window.innerWidth - paddingLeft - paddingRight) * (1/scale)).toString() + 'px';
                 }
             }
         }
+
 
         // Build slides out of the note html, interpreting `hr` as a slide break.
         for (var i=0; i<nodes.length; i++) {
@@ -416,12 +423,38 @@ $$</mathjax></p>
         function show_slide(i) {
             for (var j=0; j<slides.length; j++) {
                 slides[j].style.visibility = 'hidden';
+                var videos = slides[j].getElementsByTagName('video');
+                for (var k=0; k<videos.length; k++) {
+                    videos[k].pause();
+                    videos[k].currentTime = 0;
+                }
             }
             slides[i].style.visibility = 'visible';
+            var videos = slides[i].getElementsByTagName('video');
+            for (var j=0; j<videos.length; j++) {
+                videos[j].play();
+            }
             window.location.hash = i;
         }
-        window.onload = scale_slides;
-        show_slide(curr_slide);
+        window.onload = function() {
+            scale_slides();
+            show_slide(curr_slide);
+        };
+        window.onresize = scale_slides;
+
+        // used to update other windows in the slideshow
+        // for this to work, you can't open as `file://`
+        // you need to run it off a local server
+        function broadcast_slide(idx) {
+            localStorage.setItem('slide', idx);
+        }
+        window.addEventListener('storage', function(ev) {
+            if (ev.key === 'slide') {
+                var idx = parseInt(ev.newValue);
+                curr_slide = idx;
+                show_slide(curr_slide);
+            }
+        }, false);
 
         // Key navigation.
         document.onkeydown = function(e) {
@@ -431,6 +464,7 @@ $$</mathjax></p>
                     if (curr_slide < slides.length - 1) {
                         curr_slide += 1;
                         show_slide(curr_slide);
+                        broadcast_slide(curr_slide);
                     }
                     e.preventDefault();
                     break;
@@ -438,6 +472,7 @@ $$</mathjax></p>
                     if (curr_slide > 0) {
                         curr_slide -= 1;
                         show_slide(curr_slide);
+                        broadcast_slide(curr_slide);
                     }
                     e.preventDefault();
                     break;

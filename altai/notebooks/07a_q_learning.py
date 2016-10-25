@@ -120,7 +120,7 @@ if __name__ == '__main__':
         return env.value(state)
 
     # try discount=0.1 and discount=0.9
-    DISCOUNT = 0.9
+    DISCOUNT = 0.1
     LEARNING_RATE = 1
     agent = QLearner(pos, env, reward, discount=DISCOUNT, learning_rate=LEARNING_RATE)
     env.render(agent.state)

@@ -1,16 +1,49 @@
-html, body {
-    background: blue;
-    color: white;
+@import 'https://fonts.googleapis.com/css?family=Space+Mono';
+@import 'https://fonts.googleapis.com/css?family=Poppins:400,700';
+
+html {
+  color: #fff;
+  /* background: #0221d6; */
+  /* background: -moz-linear-gradient(top,  #0221d6 0%, #e5f438 100%); */
+  /* background: -webkit-linear-gradient(top,  #0221d6 0%,#e5f438 100%); */
+  /* background: linear-gradient(to bottom,  #0221d6 0%,#e5f438 100%); */
+  /* filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0221d6', endColorstr='#e5f438',GradientType=0 ); */
+  background: pink;
+  height: 100vh;
+  position: relative;
+  z-index: -2;
+}
+
+body {
+  font-family: 'Poppins';
+  text-shadow: 3px 3px 4px rgba(0,0,0,0.15);
+}
+
+h1 {
+  font-family: 'Poppins';
+  text-shadow: 2px 2px 0px #d6d3d3, 4px 5px 0px #dedede;
 }
 
 figcaption {
-    color: rgb(124, 158, 255);
+    color: #f0f0f0;
+    text-shadow: 2px 2px 0px #aaa;
+}
+
+img, video, iframe {
+  box-shadow: 4px 4px 6px rgba(0,0,0,0.2);
+}
+video {
+  z-index: 2;
+  position: relative;
 }
 
 blockquote {
-    text-shadow: 6px 6px 0px rgba(0,0,0,0.2);
-    color: #64FE4E;
-    border-left: 6px solid #E8FB65;
+    /* text-shadow: 3px 3px 0px rgba(0,0,0,0.1); */
+    /* color: #39f599; */
+    text-shadow: 3px 3px 0px #39f599;
+    color: #1c2721;
+    border-left: 6px solid #ffff88;
+    padding-left: 0.8em;
 }
 
 blockquote strong {
@@ -18,6 +51,40 @@ blockquote strong {
 }
 
 a, a:visited {
-    color: #FE9E9E;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.4);
+  color: #e5f438;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+.background-caption {
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  padding: 0.2em 0.4em;
+}
+.background-caption a,
+.background-caption a:visited {
+  color: #3c38f4;
+}
+
+.has-text::after {
+  background: rgba(0,0,0,0.4);
+}
+
+pre {
+  padding: 0.5em;
+  font-size: 0.8em;
+}
+
+.figures {
+  text-align: center;
+}
+
+.has-background blockquote {
+  background: rgba(0,0,0,0.6);
+  padding: 0.2em 1em 0.2em 1.2em;
+}
+.has-background {
+  color: #fff;
+}
+
+.background-attribution {
+  font-family: 'Space Mono', monospace;
 }

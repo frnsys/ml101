@@ -81,7 +81,7 @@ class Environment():
         # fill in missing cells
         max_width = max(len(row) for row in grid)
         for row in grid:
-            row += [None for _ in range(max_width - len(row))] 
+            row += [None for _ in range(max_width - len(row))]
         self.grid = grid
         self.n_rows = len(grid)
         self.n_cols = len(grid[0])
@@ -173,17 +173,15 @@ class Game():
         self.set_position(self.target, 0)
         self.set_paddle(1) # in case the target is on the paddle
         self.target = (r+1, c)
+        self.set_position(self.target, 1)
 
         # off the map, it's gone
-        if r == self.last_row:
+        if r+1 == self.last_row:
             # reward of 1 if collided with paddle, else -1
             if abs(c - self.pos) <= self.paddle_padding:
                 return 1
             else:
                 return -1
-
-        self.set_position(self.target, 1)
-
         return 0
 
     def render(self):
